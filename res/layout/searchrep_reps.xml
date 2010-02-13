@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TableLayout
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  android:layout_width="wrap_content"
+  android:layout_height="wrap_content">
+  
+  <TableRow android:id="@+id/TableRow01"
+	android:layout_width="wrap_content" 
+	android:layout_height="wrap_content"
+	android:layout_column="1">
+	<Button 
+		android:id="@+id/searchRepButton" 
+		android:layout_width="wrap_content" 
+		android:layout_height="wrap_content"
+		android:text="Find Your Rep">
+		</Button>
+	<EditText 
+		android:id="@+id/EditText01" 
+		android:layout_width="wrap_content" 
+		android:layout_height="wrap_content"
+		android:text="">
+		</EditText>
+</TableRow>
+<TableRow android:id="@+id/TableRow02" 
+	android:layout_width="wrap_content" 
+	android:layout_height="wrap_content"
+	android:layout_column="2">
+	<ImageView android:id="@+id/MemberPic"
+		android:layout_width="wrap_content" 
+		android:layout_height="wrap_content">
+		</ImageView>
+	<TextView android:text="@+id/TextView01" 
+		android:id="@+id/TextView01" 
+		android:layout_width="wrap_content" 
+		android:layout_height="wrap_content">
+		</TextView>
+</TableRow>
+</TableLayout>

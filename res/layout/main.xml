@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TableLayout android:id="@+id/TableLayout01"
+	android:layout_width="fill_parent" 
+	android:layout_height="fill_parent" 
+	xmlns:android="http://schemas.android.com/apk/res/android">
+
+
+<Button android:text="Search House of Reps" 
+	android:id="@+id/SearchRep_Reps" 
+	android:layout_width="wrap_content" 
+	android:layout_height="wrap_content">
+	</Button>
+<Button android:text="Search Senate" 
+	android:id="@+id/SearchRep_Senate" 
+	android:layout_width="wrap_content" 
+	android:layout_height="wrap_content">
+	</Button>
+<Button android:text="Search Hansard" 
+	android:id="@+id/SearchHansard" 
+	android:layout_width="wrap_content" 
+	android:layout_height="wrap_content">
+	</Button>
+</TableLayout>

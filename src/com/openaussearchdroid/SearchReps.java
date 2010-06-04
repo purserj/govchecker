@@ -25,6 +25,7 @@ import android.view.View;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Button;
@@ -36,14 +37,14 @@ public class SearchReps extends Activity{
 	private TextView tv;
 	private ImageView iv;
 	private Button repsbutton;
-	private TableRow tr;
+	private TableLayout tab;
 	private TextView tvhans;
 	
 	public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.searchrep_reps);
         iv = (ImageView) findViewById(R.id.MemberPic);
-        tr = (TableRow) findViewById(R.id.TableRow03);
+        tab = (TableLayout) findViewById(R.id.searchrepslayout);
         tvhans = (TextView) findViewById(R.id.hansardmentions_label);
         repsbutton = (Button) findViewById(R.id.searchRepButton);
         repsbutton.setOnClickListener(new View.OnClickListener() {
@@ -182,10 +183,22 @@ public class SearchReps extends Activity{
 			  		  			String hansrestext = null;
 			  		  			try{
 			  		  				Log.d("hansresults", hansresArray.getString(i));
-			  		  				hansresbodArray = hansresArray.getJSONArray(0);
-			  		  				tvhans.setText(hansresbodArray.toString());
+			  		  				JSONObject jray = hansresArray.getJSONObject(i);
+			  		  				Log.d("hansresults", jray.getString("body"));
+			  		  				TableRow trow = new TableRow(context);
+			  		  				trow.setLayoutParams(new LayoutParams(
+			  		                      LayoutParams.WRAP_CONTENT,
+			  		                    LayoutParams.WRAP_CONTENT));
+			  		  				TextView tvr = new TextView(context);
+			  		  				tvr.setId(200+i);
+			  		  				/*tvr.setLayoutParams(new LayoutParams(
+			  		  						LayoutParams.WRAP_CONTENT,
+			  		  						LayoutParams.WRAP_CONTENT));*/
+			  		  				tvr.setText(jray.getString("body"));
+			  		  				trow.addView(tvr);
+			  		  				tab.addView(trow);
 			  		  			} catch(JSONException e){
-			  		  				
+			  		  				Log.e("balls", e.toString());
 			  		  			}
 			  		  		}
 			  		  } catch (IOException e) {

@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <TableLayout
   xmlns:android="http://schemas.android.com/apk/res/android"
-  android:layout_width="wrap_content"
-  android:layout_height="wrap_content">
+  android:layout_height="fill_parent" android:layout_width="fill_parent">
   
   <TableRow android:id="@+id/TableRow01"
 	android:layout_width="wrap_content" 
@@ -18,6 +17,7 @@
 		android:id="@+id/EditText01" 
 		android:layout_width="wrap_content" 
 		android:layout_height="wrap_content"
+		android:maxLines="1"
 		android:text="">
 		</EditText>
 </TableRow>
@@ -35,4 +35,16 @@
 		android:layout_height="wrap_content">
 		</TextView>
 </TableRow>
+<TableRow 
+	android:id="@+id/TableRow03" 
+	android:layout_span="2" android:layout_height="fill_parent" android:layout_width="fill_parent" android:soundEffectsEnabled="true">
+	<TextView 
+		android:text="Latest Hansard Mentions" 
+		android:id="@+id/hansardmentions_label" 
+		android:layout_width="wrap_content" 
+		android:layout_height="wrap_content"
+		android:layout_span="2">
+		</TextView>
+</TableRow>
+
 </TableLayout>

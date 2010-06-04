@@ -15,13 +15,17 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.app.Activity;
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup.LayoutParams;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Button;
 
@@ -32,10 +36,15 @@ public class SearchReps extends Activity{
 	private TextView tv;
 	private ImageView iv;
 	private Button repsbutton;
+	private TableRow tr;
+	private TextView tvhans;
 	
 	public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.searchrep_reps);
+        iv = (ImageView) findViewById(R.id.MemberPic);
+        tr = (TableRow) findViewById(R.id.TableRow03);
+        tvhans = (TextView) findViewById(R.id.hansardmentions_label);
         repsbutton = (Button) findViewById(R.id.searchRepButton);
         repsbutton.setOnClickListener(new View.OnClickListener() {
 			
@@ -44,6 +53,7 @@ public class SearchReps extends Activity{
 				// TODO Auto-generated method stub
 				try{
 		    		etext = (EditText) findViewById(R.id.EditText01);
+		    		Context context = v.getContext();
 		    		tv = (TextView) findViewById(R.id.TextView01);
 		  		  	String urlstring = "http://www.openaustralia.org/api/getRepresentative" +
 		  		  	"?key=" + oakey +
@@ -78,6 +88,7 @@ public class SearchReps extends Activity{
 						String full_name = null;
 						String date_entered = null;
 						String party = null;
+						String personid = null;
 		  		  		for(int i=0;i<valArray.length();i++)
 		  		  		{
 		  		  			try {
@@ -89,12 +100,14 @@ public class SearchReps extends Activity{
 									party = "Party: " + valArray.getString(i) + "\n";
 								}else if(nameArray.getString(i).equals("entered_house")){
 									date_entered = "Date Elected: " + valArray.getString(i) + "\n";
+								}else if(nameArray.getString(i).equals("person_id")){
+									personid = valArray.getString(i);
 								}else if(nameArray.getString(i).equals("image")){
 									URL aURL = null;
 									try
 									{
-										aURL = new URL("http://www.openaustralia.org" + valArray.getString(i));
 										Log.i("searchrepimage", "http://www.openaustralia.org" + valArray.getString(i));
+										aURL = new URL("http://www.openaustralia.org" + valArray.getString(i));
 									}
 									catch (MalformedURLException e1)
 									{
@@ -110,16 +123,11 @@ public class SearchReps extends Activity{
 										BufferedInputStream bis = new BufferedInputStream(is);
 										/* Decode url-data to a bitmap. */
 										Bitmap bm = BitmapFactory.decodeStream(bis);
-										/*try{
-											iv.setImageBitmap(bm);
-										} catch (Exception e){
-											Log.e("imagegraberror", e.getMessage().toString());
-										}*/
 										bis.close();
 										is.close();
 										/* Apply the Bitmap to the ImageView that will be
 										returned. */
-
+										iv.setImageBitmap(bm);				
 									}
 									catch (IOException e)
 									{
@@ -135,6 +143,54 @@ public class SearchReps extends Activity{
 		  		 		memdata = full_name + date_entered + party;
 		  		  			
 						tv.setText(memdata);
+						/* Grab Hansard Mentions */
+			  		  	String hansurlstring = "http://www.openaustralia.org/api/getDebates" +
+			  		  	"?key="+ oakey +
+			  		  	"&type=representatives" +
+			  		  	"&order=d" +
+			  		  	"&person=" + personid;
+			  		  	Log.i("OpenAusURL", hansurlstring);
+			  		  	URL hansurl = new URL(hansurlstring);
+			  		  	InputStream hansinstream = null;
+			  		  	try{
+			  		  		hansinstream = hansurl.openStream();
+			  		  	} catch (IOException e){
+			  		  	}
+			  		  	try{
+			  		  		String hansresult = convertStreamToString(hansurl.openStream());
+			  		  		Log.i("GetResult",hansresult);
+			  		  		JSONObject hansjson= null;
+			  		  		try{
+			  		  			hansjson = new JSONObject(hansresult);
+			  		  		} catch(JSONException e){
+		  		  			
+			  		  		}
+		  		  		
+			  		  		JSONArray hansnameArray=hansjson.names();
+			  		  		JSONArray hansvalArray = null;
+			  		  		JSONArray hansresArray = null;
+			  		  		JSONArray hansresbodArray = null;
+			  		  		try {
+			  		  			hansvalArray = hansjson.toJSONArray(hansnameArray);
+			  		  			hansresArray = hansvalArray.getJSONArray(0);
+			  		  		} catch (JSONException e) {
+			  		  			// TODO Auto-generated catch block
+			  		  			e.printStackTrace();
+			  		  		}	
+		  		  			
+			  		  		for(int i = 0; i < hansresArray.length();i++){
+			  		  			String hansrestext = null;
+			  		  			try{
+			  		  				Log.d("hansresults", hansresArray.getString(i));
+			  		  				hansresbodArray = hansresArray.getJSONArray(0);
+			  		  				tvhans.setText(hansresbodArray.toString());
+			  		  			} catch(JSONException e){
+			  		  				
+			  		  			}
+			  		  		}
+			  		  } catch (IOException e) {
+			  			  Log.e("searchRepFail", e.getMessage().toString());
+			  		  }
 		  		  		// A Simple JSONObject Value Pushing
 		  		  		try {
 							json.put("sample key", "sample value");
@@ -146,11 +202,12 @@ public class SearchReps extends Activity{
 
 		  		  		// Closing the input stream will trigger connection release
 		  		  		instream.close();
-
+		  		  		
 
 		  		  	} catch(IOException e){
 		  		  		Log.e("searchRepFail", e.getMessage().toString());
 		  		  	}
+		  		  	
 		    	} catch( MalformedURLException e){
 		    		e.printStackTrace();
 		  	  	}
@@ -188,5 +245,4 @@ public class SearchReps extends Activity{
         }
         return sb.toString();
 	}
-
 }

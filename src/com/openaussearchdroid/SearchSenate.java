@@ -15,6 +15,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.app.Activity;
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
@@ -23,6 +24,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Spinner;
 import android.widget.AdapterView.OnItemSelectedListener;
@@ -32,12 +34,14 @@ public class SearchSenate extends Activity{
 	
 	private static String oakey = "F8c6oBD4YQsvEAGJT8DUgL8p";
 	private static Spinner states;
-	private static TextView results;
+	private LinearLayout innerlayout;
+	
 	
 	public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.searchrep_senate);
         states = (Spinner) findViewById(R.id.StateSpinner);
+        innerlayout = (LinearLayout) findViewById(R.id.senateinnerlayout);
         final String[] items = {"NSW", "VIC", "QLD", "TAS", "WA", "SA", "NT", "ACT"};
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
                 android.R.layout.simple_spinner_item, items);
@@ -46,14 +50,14 @@ public class SearchSenate extends Activity{
             @Override 
             public void onItemSelected(AdapterView parent, View v, 
                       int position, long id) { 
-            	results = (TextView) findViewById(R.id.SenateResults);
+            	innerlayout.removeAllViewsInLayout();
             	String urlstring = "http://www.openaustralia.org/api/getSenators" +
       		  		"?key=" + oakey +
       		  		"&state=" + states.getSelectedItem().toString() +
       		  		"&output=json";
             	
             	Log.i("url", urlstring);
-      		  		
+      		  	Context context = v.getContext();
             	URL url = null;
 				try {
 					url = new URL(urlstring);
@@ -113,10 +117,13 @@ public class SearchSenate extends Activity{
       		  					e.printStackTrace();
       		  				}
       		  			}
-      		  			memdata += full_name + party + "\n";
-      		  			
+      		  			TextView tvr = new TextView(context);
+      		  			tvr.setId(300+j);
+      		  			tvr.setText(full_name + party);
+      		  			innerlayout.addView(tvr);
       		  		}
-      		  	results.setText(memdata);
+      		  		
+      		  	//results.setText(memdata);
       		  	}catch (IOException e){				
       		  		Log.e("DEBUGTAG", "Remtoe Image Exception", e);
       		  	}

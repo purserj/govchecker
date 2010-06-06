@@ -16,27 +16,28 @@ public final class R {
     public static final class id {
         public static final int EditText01=0x7f05000e;
         public static final int HouseSelector=0x7f050008;
+        public static final int LinearLayout01=0x7f050012;
         public static final int MemberPic=0x7f050010;
         public static final int ScrollView01=0x7f05000a;
+        public static final int ScrollViewHans=0x7f050013;
         public static final int SearchHansard=0x7f050003;
         public static final int SearchHansardButton=0x7f050006;
         public static final int SearchHansardResults=0x7f05000b;
         public static final int SearchHansardText=0x7f050005;
         public static final int SearchRep_Reps=0x7f050001;
         public static final int SearchRep_Senate=0x7f050002;
-        public static final int SenateResults=0x7f050015;
-        public static final int SenateResultsTable=0x7f050016;
-        public static final int SenateSearchLabel=0x7f050013;
-        public static final int StateSpinner=0x7f050014;
+        public static final int StateSpinner=0x7f050016;
         public static final int TableLayout01=0x7f050000;
         public static final int TableRow01=0x7f050004;
         public static final int TableRow02=0x7f050007;
         public static final int TableRow03=0x7f050009;
         public static final int TableRowSeatSearch=0x7f05000d;
         public static final int TextView01=0x7f050011;
-        public static final int hansardmentions_label=0x7f050012;
+        public static final int hansardmentions_label=0x7f050015;
+        public static final int innerlayout=0x7f050014;
         public static final int searchRepButton=0x7f05000f;
         public static final int searchrepslayout=0x7f05000c;
+        public static final int senateinnerlayout=0x7f050017;
     }
     public static final class layout {
         public static final int main=0x7f030000;

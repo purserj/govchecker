@@ -14,7 +14,8 @@
 		android:layout_width="fill_parent" 
 		android:layout_height="wrap_content"
 		android:maxLines="1"
-		android:text="" android:lines="1" android:minLines="1" android:layout_weight="1">
+		android:text="" android:lines="1" android:minLines="1" android:layout_weight="1"
+		android:layout_span="2">
 		</EditText>
 </TableRow>
   
@@ -46,13 +47,29 @@
 <TableRow 
 	android:id="@+id/TableRow03" 
 	android:layout_span="2" android:layout_height="fill_parent" android:layout_width="fill_parent" android:soundEffectsEnabled="true">
-	<TextView 
-		android:text="Latest Hansard Mentions" 
-		android:id="@+id/hansardmentions_label" 
-		android:layout_width="wrap_content" 
-		android:layout_height="wrap_content"
-		android:layout_span="2">
-		</TextView>
+
 </TableRow>
+<LinearLayout 
+	android:id="@+id/LinearLayout01" 
+	android:layout_height="fill_parent" 
+	android:layout_width="fill_parent"
+	android:orientation="vertical"
+	android:scrollbars="vertical"
+	android:scrollbarAlwaysDrawVerticalTrack="true"
+	android:layout_span="2">
+	<ScrollView android:id="@+id/ScrollViewHans" 
+		android:layout_width="fill_parent" 
+		android:layout_height="fill_parent">
+		<LinearLayout 
+			android:id="@+id/innerlayout"
+			android:layout_width="fill_parent"
+			android:layout_height="fill_parent"
+			android:orientation="vertical">
+	<TextView android:text="Latest Hansard Mentions" android:id="@+id/hansardmentions_label" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_span="2">
+		</TextView>
+		</LinearLayout>
+		
+		</ScrollView>
+</LinearLayout>	
 
 </TableLayout>

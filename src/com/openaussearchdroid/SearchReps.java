@@ -25,6 +25,8 @@ import android.view.View;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
@@ -37,14 +39,14 @@ public class SearchReps extends Activity{
 	private TextView tv;
 	private ImageView iv;
 	private Button repsbutton;
-	private TableLayout tab;
+	private LinearLayout tab;
 	private TextView tvhans;
 	
 	public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.searchrep_reps);
         iv = (ImageView) findViewById(R.id.MemberPic);
-        tab = (TableLayout) findViewById(R.id.searchrepslayout);
+        tab = (LinearLayout) findViewById(R.id.innerlayout);
         tvhans = (TextView) findViewById(R.id.hansardmentions_label);
         repsbutton = (Button) findViewById(R.id.searchRepButton);
         repsbutton.setOnClickListener(new View.OnClickListener() {
@@ -185,18 +187,13 @@ public class SearchReps extends Activity{
 			  		  				Log.d("hansresults", hansresArray.getString(i));
 			  		  				JSONObject jray = hansresArray.getJSONObject(i);
 			  		  				Log.d("hansresults", jray.getString("body"));
-			  		  				TableRow trow = new TableRow(context);
-			  		  				trow.setLayoutParams(new LayoutParams(
-			  		                      LayoutParams.WRAP_CONTENT,
-			  		                    LayoutParams.WRAP_CONTENT));
 			  		  				TextView tvr = new TextView(context);
 			  		  				tvr.setId(200+i);
 			  		  				/*tvr.setLayoutParams(new LayoutParams(
 			  		  						LayoutParams.WRAP_CONTENT,
 			  		  						LayoutParams.WRAP_CONTENT));*/
 			  		  				tvr.setText(jray.getString("body"));
-			  		  				trow.addView(tvr);
-			  		  				tab.addView(trow);
+			  		  				tab.addView(tvr);
 			  		  			} catch(JSONException e){
 			  		  				Log.e("balls", e.toString());
 			  		  			}

@@ -51,7 +51,7 @@ public class SearchReps extends Activity{
         repsbutton = (Button) findViewById(R.id.searchRepButton);
         repsbutton.setOnClickListener(new View.OnClickListener() {
 			
-			@Override
+			
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
 				try{
@@ -168,19 +168,16 @@ public class SearchReps extends Activity{
 			  		  		} catch(JSONException e){
 		  		  			
 			  		  		}
-		  		  		
-			  		  		JSONArray hansnameArray=hansjson.names();
-			  		  		JSONArray hansvalArray = null;
+		  		  	
 			  		  		JSONArray hansresArray = null;
-			  		  		JSONArray hansresbodArray = null;
 			  		  		try {
-			  		  			hansvalArray = hansjson.toJSONArray(hansnameArray);
-			  		  			hansresArray = hansvalArray.getJSONArray(0);
+			  		  			hansresArray = hansjson.getJSONArray("rows");
 			  		  		} catch (JSONException e) {
 			  		  			// TODO Auto-generated catch block
 			  		  			e.printStackTrace();
-			  		  		}	
-		  		  			
+			  		  		}
+			  		  		//clear all old textviews
+		  		  			tab.removeAllViewsInLayout();
 			  		  		for(int i = 0; i < hansresArray.length();i++){
 			  		  			String hansrestext = null;
 			  		  			try{

@@ -44,7 +44,6 @@ public class SearchHansard extends Activity{
         hansbutton = (Button) findViewById(R.id.SearchHansardButton);
         hansbutton.setOnClickListener(new View.OnClickListener() {
 			
-			@Override
 			public void onClick(View v) {
 				et = (EditText) findViewById(R.id.SearchHansardText);
 				tv = (TextView) findViewById(R.id.SearchHansardResults);

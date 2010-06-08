@@ -21,6 +21,7 @@ import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -47,7 +48,7 @@ public class SearchSenate extends Activity{
                 android.R.layout.simple_spinner_item, items);
         states.setAdapter(adapter);
         states.setOnItemSelectedListener(new OnItemSelectedListener(){ 
-            @Override 
+            
             public void onItemSelected(AdapterView parent, View v, 
                       int position, long id) { 
             	innerlayout.removeAllViewsInLayout();
@@ -120,6 +121,11 @@ public class SearchSenate extends Activity{
       		  			TextView tvr = new TextView(context);
       		  			tvr.setId(300+j);
       		  			tvr.setText(full_name + party);
+      		  			tvr.setOnClickListener(new OnClickListener(){
+      		  				public void onClick(View v) {
+      		  					v.setBackgroundColor(1);
+      		  				}
+      		  			});
       		  			innerlayout.addView(tvr);
       		  		}
       		  		
@@ -130,7 +136,7 @@ public class SearchSenate extends Activity{
       		  	
       		  } 
 
-            @Override 
+            
             public void onNothingSelected(AdapterView arg0) { 
                   
             } 

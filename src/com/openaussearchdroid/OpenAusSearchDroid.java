@@ -48,7 +48,6 @@ public class OpenAusSearchDroid extends Activity {
         
         repbutt.setOnClickListener(new View.OnClickListener() {
 			
-			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
 				Intent myIntent = new Intent(v.getContext(), SearchReps.class);
@@ -58,7 +57,6 @@ public class OpenAusSearchDroid extends Activity {
         
     senbutt.setOnClickListener(new View.OnClickListener() {
     	
-    	@Override
     	public void onClick(View v) {
     		// TODO Auto-generated method stub
     		Intent myIntent = new Intent(v.getContext(), SearchSenate.class);
@@ -68,7 +66,7 @@ public class OpenAusSearchDroid extends Activity {
     
     hansbutt.setOnClickListener(new View.OnClickListener() {
 		
-		@Override
+		
 		public void onClick(View v) {
 			// TODO Auto-generated method stub
 			Intent myIntent = new Intent(v.getContext(), SearchHansard.class);

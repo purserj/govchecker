@@ -18,6 +18,7 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.util.Log;
@@ -32,11 +33,13 @@ public class SearchHansard extends Activity{
 	private static Spinner houseselect;
 	private static String oakey = "F8c6oBD4YQsvEAGJT8DUgL8p";
 	private static Button hansbutton;
+	private static LinearLayout hansinner;
 	
 	public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.searchhansard);
         houseselect = (Spinner) findViewById(R.id.HouseSelector);
+        hansinner = (LinearLayout) findViewById(R.id.hansinnerlayout);
         final String[] items = {"representatives", "senate"};
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
                 android.R.layout.simple_spinner_item, items);
@@ -46,7 +49,6 @@ public class SearchHansard extends Activity{
 			
 			public void onClick(View v) {
 				et = (EditText) findViewById(R.id.SearchHansardText);
-				tv = (TextView) findViewById(R.id.SearchHansardResults);
 				String urlstring = "http://www.openaustralia.org/api/getDebates" +
 			  		"?key=" + oakey +
 			  		"&type=" + houseselect.getSelectedItem().toString() +
@@ -80,67 +82,48 @@ public class SearchHansard extends Activity{
 				  		}
 				  		
 				  		String memdata = null;
+				  		hansinner.removeAllViewsInLayout();
 				  		
-				  		for(int j = 0; j < jsonr.length(); j++){
-				  			JSONArray json = null;
+				  	
+				  		JSONArray json = null;
+				  		try {
+				  			json = jsonr.getJSONArray("rows");
+				  		} catch (JSONException e1) {
+				  				// TODO Auto-generated catch block
+				  			e1.printStackTrace();
+				  		}
+				  			
+				  		for(int i = 0; i < json.length(); i++){
+				  			memdata = "";
+				  			JSONObject jsond = null;
 				  			try {
-				  				json = jsonr.getJSONArray("rows");
+				  				jsond = json.getJSONObject(i);
 				  			} catch (JSONException e1) {
 				  				// TODO Auto-generated catch block
 				  				e1.printStackTrace();
 				  			}
 				  			
-				  			for(int i = 0; i < json.length(); i++){
 				  			
-				  				JSONObject jsond = null;
-								try {
-									jsond = new JSONObject(json.getJSONObject(j).toString());
-								} catch (JSONException e1) {
-									// TODO Auto-generated catch block
-									e1.printStackTrace();
-								}
-				  			
-				  				JSONArray nameArray=jsond.names();
-				  				JSONArray valArray = null;
-				  				try {
-				  					valArray = jsond.toJSONArray(nameArray);
-				  				} catch (JSONException e) {
-				  					// TODO Auto-generated catch block
-				  					e.printStackTrace();
-				  				}
-				  		
-				  			String person = null;	
-				  			String quote = "";
-				  			for(int k=0;k<valArray.length();k++)
-				  			{
-				  				try {
-				  					/*Log.i("Praeda","<jsonname"+k+">\n"+nameArray.getString(k)+"\n</jsonname"+i+">\n"
-				  							+"<jsonvalue"+k+">\n"+valArray.getString(k)+"\n</jsonvalue"+i+">");*/
-				  						if(nameArray.getString(k).equals("body")){
-				  							quote = valArray.getString(k).toString();
-				  						}
-				  					} catch (JSONException e) {
-				  					e.printStackTrace();
-				  					}
-				  						  					
+				  			//memdata += quote + "\n\n";
+				  			TextView tvr = new TextView(v.getContext());
+				  			tvr.setId(500+i);
+				  			try{
+				  				tvr.setText(jsond.getString("body"));
+				  			} catch (JSONException e) {
+				  				e.printStackTrace();
 				  			}
-				  			memdata += quote + "\n\n";
-				  			
+				  			hansinner.addView(tvr);
 				  		}
-				  			tv.setText(memdata);
-				  		}
-				  	}catch (IOException e){				
-				  		Log.e("DEBUGTAG", "Remtoe Image Exception", e);
-				  	}
-
-				
+				  	
+				  }catch (IOException e){				
+					  Log.e("DEBUGTAG", "Remtoe Image Exception", e);
+				  }
 			}
 		});
 	}
 	
 	public void searchHansardButtonClick(View target){
 		et = (EditText) findViewById(R.id.SearchHansardText);
-		tv = (TextView) findViewById(R.id.SearchHansardResults);
 		String urlstring = "http://www.openaustralia.org/api/getDebates" +
 	  		"?key=" + oakey +
 	  		"&type=" + houseselect.getSelectedItem().toString() +

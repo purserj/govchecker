@@ -25,7 +25,10 @@ import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TableLayout;
+import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Spinner;
 import android.widget.AdapterView.OnItemSelectedListener;
@@ -35,14 +38,14 @@ public class SearchSenate extends Activity{
 	
 	private static String oakey = "F8c6oBD4YQsvEAGJT8DUgL8p";
 	private static Spinner states;
-	private LinearLayout innerlayout;
+	private TableLayout innerlayout;
 	
 	
 	public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.searchrep_senate);
         states = (Spinner) findViewById(R.id.StateSpinner);
-        innerlayout = (LinearLayout) findViewById(R.id.senateinnerlayout);
+        innerlayout = (TableLayout) findViewById(R.id.SenateTable);
         final String[] items = {"NSW", "VIC", "QLD", "TAS", "WA", "SA", "NT", "ACT"};
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
                 android.R.layout.simple_spinner_item, items);
@@ -86,6 +89,8 @@ public class SearchSenate extends Activity{
       		  		String memdata = null;
       		  		
       		  		for(int j = 0; j < jsonr.length(); j++){
+      		  			TableRow tabr = new TableRow(context);
+      		  			ImageView iv = new ImageView(context);
       		  			JSONObject json = null;
 						try {
 							json = new JSONObject(jsonr.getJSONObject(j).toString());
@@ -113,11 +118,43 @@ public class SearchSenate extends Activity{
       		  						full_name = "Name: " + valArray.getString(i) + "\n";
       		  					}else if(nameArray.getString(i).equals("party")){
       		  						party = "Party: " + valArray.getString(i) + "\n";
+      		  					}else if(nameArray.getString(i).equals("person_id")){
+      		  						URL aURL = null;
+      		  						try	
+      		  						{
+      		  							Log.i("searchrepimage", "http://www.openaustralia.org" + valArray.getString(i));
+      		  							aURL = new URL("http://www.openaustralia.org" + valArray.getString(i));
+      		  						}
+      		  						catch (MalformedURLException e1)
+      		  						{
+      		  							// TODO Auto-generated catch block
+      		  							e1.printStackTrace();
+      		  						}
+      		  						try
+      		  						{
+      		  							URLConnection con = aURL.openConnection();
+      		  							con.connect();
+      		  							InputStream is = con.getInputStream();
+      		  							/* Buffered is always good for a performance plus. */
+      		  							BufferedInputStream bis = new BufferedInputStream(is);
+      		  							/* Decode url-data to a bitmap. */
+      		  							Bitmap bm = BitmapFactory.decodeStream(bis);
+      		  							bis.close();
+      		  							is.close();
+      		  							/* Apply the Bitmap to the ImageView that will be
+										returned. */
+      		  							iv.setImageBitmap(bm);				
+      		  						}
+      		  						catch (IOException e)
+      		  						{
+      		  							Log.e("DEBUGTAG", "Remtoe Image Exception", e);
+      		  						}
       		  					}
       		  				}  catch (JSONException e) {
       		  					e.printStackTrace();
       		  				}
       		  			}
+      		  			
       		  			TextView tvr = new TextView(context);
       		  			tvr.setId(300+j);
       		  			tvr.setText(full_name + party);
@@ -126,7 +163,9 @@ public class SearchSenate extends Activity{
       		  					v.setBackgroundColor(1);
       		  				}
       		  			});
-      		  			innerlayout.addView(tvr);
+      		  			tabr.addView(iv);
+      		  			tabr.addView(tvr);
+      		  			innerlayout.addView(tabr);
       		  		}
       		  		
       		  	//results.setText(memdata);

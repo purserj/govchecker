@@ -4,7 +4,7 @@
   android:layout_height="fill_parent" android:layout_width="fill_parent"
   android:id="@+id/searchrepslayout">
   
-  <TableRow 
+  <TextView android:id="@+id/TextView02" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Enter the name of the seat below"></TextView><TableRow 
 		android:id="@+id/TableRowSeatSearch"
 		android:layout_width="fill_parent"
 		android:layout_height="wrap_content"
@@ -69,7 +69,8 @@
 			android:orientation="vertical">
 		</LinearLayout>
 		
-		</ScrollView>
+		
+</ScrollView>
 </LinearLayout>	
 
 </TableLayout>

@@ -33,7 +33,7 @@ import android.widget.TextView;
 import android.widget.Button;
 
 public class SearchReps extends Activity{
-	
+
 	private static String oakey = "F8c6oBD4YQsvEAGJT8DUgL8p";
 	private EditText etext;
 	private TextView tv;
@@ -41,7 +41,7 @@ public class SearchReps extends Activity{
 	private Button repsbutton;
 	private LinearLayout tab;
 	private TextView tvhans;
-	
+
 	public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.searchrep_reps);
@@ -50,8 +50,8 @@ public class SearchReps extends Activity{
         tvhans = (TextView) findViewById(R.id.hansardmentions_label);
         repsbutton = (Button) findViewById(R.id.searchRepButton);
         repsbutton.setOnClickListener(new View.OnClickListener() {
-			
-			
+
+
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
 				try{
@@ -76,9 +76,9 @@ public class SearchReps extends Activity{
 		  		  		try{
 		  		  			json = new JSONObject(result);
 		  		  		} catch(JSONException e){
-		  		  			
+
 		  		  		}
-		  		  		
+
 		  		  		JSONArray nameArray=json.names();
 		  		  		JSONArray valArray = null;
 						try {
@@ -130,7 +130,7 @@ public class SearchReps extends Activity{
 										is.close();
 										/* Apply the Bitmap to the ImageView that will be
 										returned. */
-										iv.setImageBitmap(bm);				
+										iv.setImageBitmap(bm);
 									}
 									catch (IOException e)
 									{
@@ -142,9 +142,9 @@ public class SearchReps extends Activity{
 								e.printStackTrace();
 							}
 		  		  		}
-		  		  		
+
 		  		 		memdata = full_name + date_entered + party;
-		  		  			
+
 						tv.setText(memdata);
 						/* Grab Hansard Mentions */
 			  		  	String hansurlstring = "http://www.openaustralia.org/api/getDebates" +
@@ -166,9 +166,9 @@ public class SearchReps extends Activity{
 			  		  		try{
 			  		  			hansjson = new JSONObject(hansresult);
 			  		  		} catch(JSONException e){
-		  		  			
+
 			  		  		}
-		  		  	
+
 			  		  		JSONArray hansresArray = null;
 			  		  		try {
 			  		  			hansresArray = hansjson.getJSONArray("rows");
@@ -209,12 +209,12 @@ public class SearchReps extends Activity{
 
 		  		  		// Closing the input stream will trigger connection release
 		  		  		instream.close();
-		  		  		
+
 
 		  		  	} catch(IOException e){
 		  		  		Log.e("searchRepFail", e.getMessage().toString());
 		  		  	}
-		  		  	
+
 		    	} catch( MalformedURLException e){
 		    		e.printStackTrace();
 		  	  	}
@@ -222,10 +222,10 @@ public class SearchReps extends Activity{
 			}
 		});
     }
-	
+
 	public void searchRepClickHandler(View target){
     	    }
-	
+
 	private static String convertStreamToString(InputStream is) {
         /*
          * To convert the InputStream to String we use the BufferedReader.readLine()
@@ -235,7 +235,7 @@ public class SearchReps extends Activity{
          */
         BufferedReader reader = new BufferedReader(new InputStreamReader(is));
         StringBuilder sb = new StringBuilder();
- 
+
         String line = null;
         try {
             while ((line = reader.readLine()) != null) {

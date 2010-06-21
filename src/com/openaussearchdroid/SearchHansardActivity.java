@@ -27,14 +27,14 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 
 public class SearchHansard extends Activity{
-	
+
 	private static EditText et;
 	private static TextView tv;
 	private static Spinner houseselect;
 	private static String oakey = "F8c6oBD4YQsvEAGJT8DUgL8p";
 	private static Button hansbutton;
 	private static LinearLayout hansinner;
-	
+
 	public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.searchhansard);
@@ -46,7 +46,7 @@ public class SearchHansard extends Activity{
         houseselect.setAdapter(adapter);
         hansbutton = (Button) findViewById(R.id.SearchHansardButton);
         hansbutton.setOnClickListener(new View.OnClickListener() {
-			
+
 			public void onClick(View v) {
 				et = (EditText) findViewById(R.id.SearchHansardText);
 				String urlstring = "http://www.openaustralia.org/api/getDebates" +
@@ -54,7 +54,7 @@ public class SearchHansard extends Activity{
 			  		"&type=" + houseselect.getSelectedItem().toString() +
 			  		"&search=" + URLEncoder.encode(et.getText().toString()) +
 			  		"&output=json";
-				
+
 				URL url = null;
 				try {
 					url = new URL(urlstring);
@@ -66,11 +66,11 @@ public class SearchHansard extends Activity{
 				try{
 					instream = url.openStream();
 				} catch (IOException e){
-				  		
+
 				}
-			  		
+
 				Log.i("url", urlstring);
-				
+
 				try{
 				  		String result = convertStreamToString(url.openStream());
 				  		Log.i("GetResult",result);
@@ -80,11 +80,11 @@ public class SearchHansard extends Activity{
 				  		} catch(JSONException e){
 				  			Log.e("jsonerror", e.getMessage().toString());
 				  		}
-				  		
+
 				  		String memdata = null;
 				  		hansinner.removeAllViewsInLayout();
-				  		
-				  	
+
+
 				  		JSONArray json = null;
 				  		try {
 				  			json = jsonr.getJSONArray("rows");
@@ -92,7 +92,7 @@ public class SearchHansard extends Activity{
 				  				// TODO Auto-generated catch block
 				  			e1.printStackTrace();
 				  		}
-				  			
+
 				  		for(int i = 0; i < json.length(); i++){
 				  			memdata = "";
 				  			JSONObject jsond = null;
@@ -102,8 +102,8 @@ public class SearchHansard extends Activity{
 				  				// TODO Auto-generated catch block
 				  				e1.printStackTrace();
 				  			}
-				  			
-				  			
+
+
 				  			//memdata += quote + "\n\n";
 				  			TextView tvr = new TextView(v.getContext());
 				  			tvr.setId(500+i);
@@ -114,14 +114,14 @@ public class SearchHansard extends Activity{
 				  			}
 				  			hansinner.addView(tvr);
 				  		}
-				  	
-				  }catch (IOException e){				
+
+				  }catch (IOException e){
 					  Log.e("DEBUGTAG", "Remtoe Image Exception", e);
 				  }
 			}
 		});
 	}
-	
+
 	public void searchHansardButtonClick(View target){
 		et = (EditText) findViewById(R.id.SearchHansardText);
 		String urlstring = "http://www.openaustralia.org/api/getDebates" +
@@ -129,7 +129,7 @@ public class SearchHansard extends Activity{
 	  		"&type=" + houseselect.getSelectedItem().toString() +
 	  		"&search=" + URLEncoder.encode(et.getText().toString()) +
 	  		"&output=json";
-		
+
 		URL url = null;
 		try {
 			url = new URL(urlstring);
@@ -141,11 +141,11 @@ public class SearchHansard extends Activity{
 		try{
 			instream = url.openStream();
 		} catch (IOException e){
-		  		
+
 		}
-	  		
+
 		Log.i("url", urlstring);
-		
+
 		try{
 		  		String result = convertStreamToString(url.openStream());
 		  		Log.i("GetResult",result);
@@ -155,9 +155,9 @@ public class SearchHansard extends Activity{
 		  		} catch(JSONException e){
 		  			Log.e("jsonerror", e.getMessage().toString());
 		  		}
-		  		
+
 		  		String memdata = null;
-		  		
+
 		  		for(int j = 0; j < jsonr.length(); j++){
 		  			JSONArray json = null;
 		  			try {
@@ -166,9 +166,9 @@ public class SearchHansard extends Activity{
 		  				// TODO Auto-generated catch block
 		  				e1.printStackTrace();
 		  			}
-		  			
+
 		  			for(int i = 0; i < json.length(); i++){
-		  			
+
 		  				JSONObject jsond = null;
 						try {
 							jsond = new JSONObject(json.getJSONObject(j).toString());
@@ -176,7 +176,7 @@ public class SearchHansard extends Activity{
 							// TODO Auto-generated catch block
 							e1.printStackTrace();
 						}
-		  			
+
 		  				JSONArray nameArray=jsond.names();
 		  				JSONArray valArray = null;
 		  				try {
@@ -185,8 +185,8 @@ public class SearchHansard extends Activity{
 		  					// TODO Auto-generated catch block
 		  					e.printStackTrace();
 		  				}
-		  		
-		  			String person = null;	
+
+		  			String person = null;
 		  			String quote = "";
 		  			for(int k=0;k<valArray.length();k++)
 		  			{
@@ -199,14 +199,14 @@ public class SearchHansard extends Activity{
 		  					} catch (JSONException e) {
 		  					e.printStackTrace();
 		  					}
-		  						  					
+
 		  			}
 		  			memdata += quote + "\n\n";
-		  			
+
 		  		}
 		  			tv.setText(memdata);
 		  		}
-		  	}catch (IOException e){				
+		  	}catch (IOException e){
 		  		Log.e("DEBUGTAG", "Remtoe Image Exception", e);
 		  	}
 	}
@@ -220,7 +220,7 @@ public class SearchHansard extends Activity{
          */
         BufferedReader reader = new BufferedReader(new InputStreamReader(is));
         StringBuilder sb = new StringBuilder();
- 
+
         String line = null;
         try {
             while ((line = reader.readLine()) != null) {

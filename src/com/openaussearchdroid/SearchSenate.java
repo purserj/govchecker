@@ -35,12 +35,12 @@ import android.widget.AdapterView.OnItemSelectedListener;
 
 
 public class SearchSenate extends Activity{
-	
+
 	private static String oakey = "F8c6oBD4YQsvEAGJT8DUgL8p";
 	private static Spinner states;
 	private TableLayout innerlayout;
-	
-	
+
+
 	public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.searchrep_senate);
@@ -50,16 +50,16 @@ public class SearchSenate extends Activity{
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
                 android.R.layout.simple_spinner_item, items);
         states.setAdapter(adapter);
-        states.setOnItemSelectedListener(new OnItemSelectedListener(){ 
-            
-            public void onItemSelected(AdapterView parent, View v, 
-                      int position, long id) { 
+        states.setOnItemSelectedListener(new OnItemSelectedListener(){
+
+            public void onItemSelected(AdapterView parent, View v,
+                      int position, long id) {
             	innerlayout.removeAllViewsInLayout();
             	String urlstring = "http://www.openaustralia.org/api/getSenators" +
       		  		"?key=" + oakey +
       		  		"&state=" + states.getSelectedItem().toString() +
       		  		"&output=json";
-            	
+
             	Log.i("url", urlstring);
       		  	Context context = v.getContext();
             	URL url = null;
@@ -73,9 +73,9 @@ public class SearchSenate extends Activity{
       		  	try{
       		  		instream = url.openStream();
       		  	} catch (IOException e){
-      		  		
+
       		  	}
-      		  	
+
       		  	try{
       		  		String result = convertStreamToString(url.openStream());
       		  		Log.i("GetResult",result);
@@ -85,9 +85,9 @@ public class SearchSenate extends Activity{
       		  		} catch(JSONException e){
       		  			Log.e("jsonerror", e.getMessage().toString());
       		  		}
-      		  		
+
       		  		String memdata = null;
-      		  		
+
       		  		for(int j = 0; j < jsonr.length(); j++){
       		  			TableRow tabr = new TableRow(context);
       		  			ImageView iv = new ImageView(context);
@@ -106,8 +106,8 @@ public class SearchSenate extends Activity{
       		  				// TODO Auto-generated catch block
       		  				e.printStackTrace();
       		  			}
-      		  		
-      		  			String full_name = null;	
+
+      		  			String full_name = null;
       		  			String party = null;
       		  			for(int i=0;i<valArray.length();i++)
       		  			{
@@ -120,7 +120,7 @@ public class SearchSenate extends Activity{
       		  						party = "Party: " + valArray.getString(i) + "\n";
       		  					}else if(nameArray.getString(i).equals("person_id")){
       		  						URL aURL = null;
-      		  						try	
+      		  						try
       		  						{
       		  							Log.i("searchrepimage", "http://www.openaustralia.org" + valArray.getString(i));
       		  							aURL = new URL("http://www.openaustralia.org" + valArray.getString(i));
@@ -143,7 +143,7 @@ public class SearchSenate extends Activity{
       		  							is.close();
       		  							/* Apply the Bitmap to the ImageView that will be
 										returned. */
-      		  							iv.setImageBitmap(bm);				
+      		  							iv.setImageBitmap(bm);
       		  						}
       		  						catch (IOException e)
       		  						{
@@ -154,7 +154,7 @@ public class SearchSenate extends Activity{
       		  					e.printStackTrace();
       		  				}
       		  			}
-      		  			
+
       		  			TextView tvr = new TextView(context);
       		  			tvr.setId(300+j);
       		  			tvr.setText(full_name + party);
@@ -167,21 +167,21 @@ public class SearchSenate extends Activity{
       		  			tabr.addView(tvr);
       		  			innerlayout.addView(tabr);
       		  		}
-      		  		
+
       		  	//results.setText(memdata);
-      		  	}catch (IOException e){				
+      		  	}catch (IOException e){
       		  		Log.e("DEBUGTAG", "Remtoe Image Exception", e);
       		  	}
-      		  	
-      		  } 
 
-            
-            public void onNothingSelected(AdapterView arg0) { 
-                  
-            } 
+      		  }
+
+
+            public void onNothingSelected(AdapterView arg0) {
+
+            }
      });
     }
-	
+
 	private static String convertStreamToString(InputStream is) {
         /*
          * To convert the InputStream to String we use the BufferedReader.readLine()
@@ -191,7 +191,7 @@ public class SearchSenate extends Activity{
          */
         BufferedReader reader = new BufferedReader(new InputStreamReader(is));
         StringBuilder sb = new StringBuilder();
- 
+
         String line = null;
         try {
             while ((line = reader.readLine()) != null) {

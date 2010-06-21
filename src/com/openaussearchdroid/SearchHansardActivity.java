@@ -2,6 +2,7 @@ package com.openaussearchdroid;
 
 import java.io.IOException;
 import java.net.URLEncoder;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -27,6 +28,7 @@ public class SearchHansardActivity extends Activity
 	private Spinner houseselect;
 	private static final String oakey = "F8c6oBD4YQsvEAGJT8DUgL8p";
 	private Button hansButton;
+	private AtomicBoolean searchInProgress;
 
 	private String previousHouseSelection = "";
 	private String previousKeySelection = "";
@@ -35,6 +37,7 @@ public class SearchHansardActivity extends Activity
 	{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.searchhansard);
+		searchInProgress = new AtomicBoolean(false);
 		houseselect = (Spinner) findViewById(R.id.HouseSelector);
 		final String[] items = {"representatives", "senate"};
 		ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
@@ -52,12 +55,21 @@ public class SearchHansardActivity extends Activity
 					Log.i("duplicate_selection", "duplicate search in hansard search");
 					return;
 				}
+				/** only get and set after we have checked for a duplicate search */
+				if (searchInProgress.getAndSet(true))
+				{
+					Log.i("search_already_in_progress", " .. search going Hansard");
+					return;
+				}
 				LinearLayout hansInnerLayout = (LinearLayout) findViewById(R.id.hansinnerlayout);
 				hansInnerLayout.removeAllViewsInLayout();
 
 				new PerformHansardSearch().execute(new HansardSearch(getHansardUrl(), v, hansInnerLayout));
 				previousHouseSelection = houseselect.getSelectedItem().toString();
 				previousKeySelection = _et.getText().toString();
+
+				searchInProgress.set(false);
+				Log.i("search_in_progress", " search HANSARD STOPPED");
 			}
 		});
 	}

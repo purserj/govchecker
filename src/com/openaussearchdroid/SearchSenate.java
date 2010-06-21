@@ -1,6 +1,7 @@
 package com.openaussearchdroid;
 
 import java.io.IOException;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -30,14 +31,17 @@ public class SearchSenate extends Activity
 	private Spinner _states;
 	private TableLayout _innerlayout;
 	private View _view;
+	private AtomicBoolean searchInProgress;
 
+	private String previousState = "";
 	public void onCreate(Bundle savedInstanceState)
 	{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.searchrep_senate);
+		searchInProgress = new AtomicBoolean(false);
 		_states = (Spinner) findViewById(R.id.StateSpinner);
 		_innerlayout = (TableLayout) findViewById(R.id.SenateTable);
-		final String[] items = {"NSW", "VIC", "queensland", "TAS", "WA", "SA", "NT", "ACT"};
+		final String[] items = {"NSW", "VIC", "QLD", "TAS", "WA", "SA", "NT", "ACT"};
 		ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
 				android.R.layout.simple_spinner_item, items);
 
@@ -46,15 +50,36 @@ public class SearchSenate extends Activity
 		{
 			public void onItemSelected(AdapterView parent, View v, 	int position, long id)
 			{
+				String stateSearch;
 				_view = v;
 				_innerlayout.removeAllViewsInLayout();
+				stateSearch = _states.getSelectedItem().toString();
+				if (stateSearch.equals("QLD") )
+				{
+					stateSearch = "queensland";
+				}
+				if (previousState.equals(stateSearch))
+				{
+					Log.i("duplicate_state_selection", "in search senate");
+					return;
+				}
+				/** only get and set after we have checked for a duplicate search */
+				if (searchInProgress.getAndSet(true))
+				{
+					Log.i("search_already_in_progress", " .. search going Senate");
+					return;
+				}
 
 				String urlString = "http://www.openaustralia.org/api/getSenators" +
 				"?key=" + oakey +
-				"&state=" + _states.getSelectedItem().toString() +
+				"&state=" + stateSearch +
 				"&output=json";
-				new PerformSenateSearch().execute(urlString);
 
+				new PerformSenateSearch().execute(urlString);
+				previousState = stateSearch;
+
+				searchInProgress.set(false);
+				Log.i("search_in_progress", " search SENATE STOPPED");
 
 			}
 			public void onNothingSelected(AdapterView arg0)
@@ -96,6 +121,10 @@ public class SearchSenate extends Activity
 		@Override
 		protected void onPostExecute(JSONArray jsonr)
 		{
+			if (jsonr == null)
+			{
+				return;
+			}
 			for(int j = 0; j < jsonr.length(); j++)
 			{
 				Context context = _view.getContext();
@@ -108,7 +137,6 @@ public class SearchSenate extends Activity
 				}
 				catch (JSONException e)
 				{
-					// TODO Auto-generated catch block
 					Utilities.recordStackTrace(e);
 					return;
 				}

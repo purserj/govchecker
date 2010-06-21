@@ -63,7 +63,7 @@ public class RepSearch
 
 	public void setParty() throws JSONException
 	{
-		this.party = "Party: " + this.resultJson.getString("party");
+		this.party = "Party: " + this.resultJson.getString("party") + "\n";
 	}
 
 	public void setPersonID() throws JSONException
@@ -88,10 +88,10 @@ public class RepSearch
 
 	public void setFromJsonResultMemData() throws JSONException
 	{
+		this.setPersonID();
 		this.setFullName();
 		this.setDateEntered();
 		this.setParty();
-		this.setPersonID();
 		this.setMemdata();
 	}
 

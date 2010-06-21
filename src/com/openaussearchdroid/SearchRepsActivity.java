@@ -2,6 +2,7 @@ package com.openaussearchdroid;
 
 import java.io.IOException;
 import java.net.URLEncoder;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import org.json.JSONException;
 
@@ -29,11 +30,13 @@ public class SearchRepsActivity extends Activity
 	private TextView _tvhans;
 	private String previousSearch = "";
 	private View _view;
+	private AtomicBoolean searchInProgress;
 
 	public void onCreate(Bundle savedInstanceState)
 	{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.searchrep_reps);
+		searchInProgress = new AtomicBoolean(false);
 		_iv = (ImageView) findViewById(R.id.MemberPic);
 		_tab = (LinearLayout) findViewById(R.id.innerlayout);
 		_tvhans = (TextView) findViewById(R.id.hansardmentions_label);
@@ -50,6 +53,12 @@ public class SearchRepsActivity extends Activity
 					Log.i("duplicate_search", " in search reps");
 					return;
 				}
+				/** only get and set after we have checked for a duplicate search */
+				if (searchInProgress.getAndSet(true))
+				{
+					Log.i("search_already_in_progress", " .. search going Reps");
+					return;
+				}
 
 				_tab.removeAllViewsInLayout();
 
@@ -61,7 +70,10 @@ public class SearchRepsActivity extends Activity
 
 				RepSearch rep = new RepSearch(urlString, searchKey);
 				new PerformRepsSearch().execute(rep);
+				previousSearch = searchKey;
 
+				searchInProgress.set(false);
+				Log.i("search_in_progress", " search REPS SEARCH STOPPED");
 			}
 		});
 	}
@@ -81,7 +93,7 @@ public class SearchRepsActivity extends Activity
 			RepSearch rep = repSearchArray[0];
 			try
 			{
-					rep.fetchSearchResultAndSetJsonResult();
+				rep.fetchSearchResultAndSetJsonResult();
 			}
 			catch (IOException e)
 			{
@@ -115,26 +127,37 @@ public class SearchRepsActivity extends Activity
 			{
 				rep.setPwnieImageUrl();
 			}
+			if (rep.getImgLoc() != null)
+			{
+				try
+				{
+					rep.fetchAndSetRepImage();
+				}
+				catch (IOException e)
+				{
+					Utilities.recordStackTrace(e);
+				}
+			}
 
-			try
-			{
-				rep.fetchAndSetRepImage();
-			}
-			catch (IOException e)
-			{
-				Utilities.recordStackTrace(e);
-			}
 			return rep;
 		}
 		@Override
 		protected void onPostExecute(RepSearch rep)
 		{
-			if (rep.getSearchKey().equals("pwnie") && rep.getRepImage() != null)
+			if (rep == null)
 			{
+				Log.e("on_post_ex_search_rep", " rep is null ...");
+				return;
+			}
+			if (rep.getSearchKey().equals("pwnie"))
+			{
+				Log.i("can haz pwnie?", "...pwnie!");
 				_iv.setImageBitmap(rep.getRepImage());
 				return;
 			}
 			_tv.setText(rep.getMemData());
+			_iv.setImageBitmap(rep.getRepImage());
+
 			/* Grab Hansard Mentions */
 			if (rep.getPersonID() == null)
 			{
@@ -149,7 +172,6 @@ public class SearchRepsActivity extends Activity
 			"&person=" + rep.getPersonID();
 			Log.i("OpenAusURL", urlString);
 			new PerformHansardSearch().execute(new HansardSearch(urlString, _view, _tab));
-			previousSearch = rep.getSearchKey();
 		}
 	}
 

@@ -1,5 +1,6 @@
 package com.openaussearchdroid;
 
+import java.io.BufferedInputStream;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -7,7 +8,10 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.net.URL;
+import java.net.URLConnection;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.util.Log;
 
 public class Utilities
@@ -43,7 +47,7 @@ public class Utilities
 		}
 		catch (IOException e)
 		{
-			Log.e("close stream", e.getMessage());
+			recordStackTrace(e);
 		}
 	}
 
@@ -65,5 +69,42 @@ public class Utilities
 		/* capture the stack trace */
 		e.printStackTrace(new PrintWriter(tempSW));
 		Log.e(e.getMessage(),tempSW.toString());
+	}
+	public static Bitmap fetchImage(String imgLoc) throws IOException
+	{
+		/*
+		android is so awesome that the Log.i a few lines down
+		will trigger a null pointer exception - because it cannot
+		print null ... right ... - bail out early.
+		The pwnie has severed it's place in debugging!
+		*/
+		if (imgLoc == null)
+		{
+			return null;
+		}
+		URL aURL;
+		Log.i("fetchImage", imgLoc);
+		aURL = new URL(imgLoc);
+		URLConnection con;
+		con = aURL.openConnection();
+
+		InputStream is;
+		BufferedInputStream bis = null;
+
+		con.connect();
+		is = con.getInputStream();
+		bis = new BufferedInputStream(is);
+		/* Decode url-data to a bitmap. */
+		Bitmap bm = BitmapFactory.decodeStream(bis);
+		try
+		{
+			bis.close();
+		}
+		catch (IOException e)
+		{
+			Utilities.recordStackTrace(e);
+		}
+		closeStream(is);
+		return bm;
 	}
 }

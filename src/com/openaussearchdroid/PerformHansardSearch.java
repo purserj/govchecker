@@ -7,6 +7,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.os.AsyncTask;
+import android.text.Html;
 import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -62,6 +63,7 @@ public class PerformHansardSearch extends AsyncTask <HansardSearch, Integer, JSO
 			return;
 		}
 		JSONObject jsonD;
+
 		for(int i = 0; i < json.length(); i++)
 		{
 			jsonD = null;
@@ -77,9 +79,11 @@ public class PerformHansardSearch extends AsyncTask <HansardSearch, Integer, JSO
 
 			TextView tvr = new TextView(v.getContext());
 			tvr.setId(500+i);
+			String temp = "";
 			try
 			{
-				tvr.setText(jsonD.getString("body"));
+				temp = jsonD.getString("body");
+				tvr.setText(Html.fromHtml(temp), TextView.BufferType.SPANNABLE );
 			}
 			catch (JSONException e)
 			{

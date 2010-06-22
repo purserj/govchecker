@@ -21,6 +21,7 @@ public class RepSearch
 	private Bitmap repImage;
 
 	private String searchKey = "";
+	private String baseUrlPath = "http://www.openaustralia.org";
 
 	public RepSearch(String url)
 	{
@@ -32,6 +33,13 @@ public class RepSearch
 		this.url = url;
 		this.searchKey = searchKey;
 	}
+	public RepSearch(String url, String searchKey, String baseUrlPath)
+	{
+		this.url = url;
+		this.searchKey = searchKey;
+		this.baseUrlPath = baseUrlPath;
+	}
+
 	public void fetchSearchResult() throws IOException
 	{
 		this.resultRaw = Utilities.getDataFromUrl(this.url, "url");
@@ -73,7 +81,7 @@ public class RepSearch
 
 	public void setImgLoc() throws JSONException
 	{
-		this.imgLoc = "http://www.openaustralia.org" + this.resultJson.getString("image");
+		this.imgLoc = this.baseUrlPath + this.resultJson.getString("image");
 	}
 
 	public void fetchAndSetRepImage() throws IOException
@@ -109,27 +117,27 @@ public class RepSearch
 	}
 	public String getFullName()
 	{
-		return fullName;
+		return this.fullName;
 	}
 	public String getImgLoc()
 	{
-		return imgLoc;
+		return this.imgLoc;
 	}
 	public String getDateEntered()
 	{
-		return dateEntered;
+		return this.dateEntered;
 	}
 	public String getPersonID()
 	{
-		return personID;
+		return this.personID;
 	}
 	public String getParty()
 	{
-		return party;
+		return this.party;
 	}
 	public String getMemData()
 	{
-		return memData;
+		return this.memData;
 	}
 	public String getSearchKey()
 	{

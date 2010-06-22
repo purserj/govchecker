@@ -18,6 +18,7 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class SearchHansardActivity extends Activity
 {
@@ -63,6 +64,8 @@ public class SearchHansardActivity extends Activity
 				}
 				LinearLayout hansInnerLayout = (LinearLayout) findViewById(R.id.hansinnerlayout);
 				hansInnerLayout.removeAllViewsInLayout();
+				Toast toast = Toast.makeText(getApplicationContext(), "searching...", Toast.LENGTH_LONG);
+				toast.show();
 
 				new PerformHansardSearch().execute(new HansardSearch(getHansardUrl(), v, hansInnerLayout));
 				previousHouseSelection = houseselect.getSelectedItem().toString();

@@ -2,6 +2,7 @@ package com.openaussearchdroid;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedReader;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -77,34 +78,49 @@ public class Utilities
 		will trigger a null pointer exception - because it cannot
 		print null ... right ... - bail out early.
 		The pwnie has severed it's place in debugging!
-		*/
+		 */
 		if (imgLoc == null)
 		{
+			Log.i("fetchImage", "imgLoc was null");
 			return null;
 		}
 		URL aURL;
+		URLConnection con;
 		Log.i("fetchImage", imgLoc);
 		aURL = new URL(imgLoc);
-		URLConnection con;
 		con = aURL.openConnection();
+		con.setConnectTimeout(10000);
+		con.setReadTimeout(10000);
+		con.setDefaultUseCaches(true);
+		/*
+		android is so awesome that if you were to do
+		bitmap = BitmapFactory.decodeStream(...)
+		it can fail! (except for pwnies - no joke! - test it!)
+			(on low bandwidth high latency connections - but not in the vm ;P)
+		awesome++
+		 */
+		byte [] content = convertInputStreamToByteArray(con.getInputStream());
+		closeStream(con.getInputStream());
 
-		InputStream is;
-		BufferedInputStream bis = null;
-
-		con.connect();
-		is = con.getInputStream();
-		bis = new BufferedInputStream(is);
-		/* Decode url-data to a bitmap. */
-		Bitmap bm = BitmapFactory.decodeStream(bis);
-		try
+		Bitmap bitmap = BitmapFactory.decodeByteArray(content, 0, content.length);
+		if (bitmap == null)
 		{
-			bis.close();
+			throw new IOException("bitmap is null");
 		}
-		catch (IOException e)
-		{
-			Utilities.recordStackTrace(e);
-		}
-		closeStream(is);
-		return bm;
+		return bitmap;
 	}
+	public static byte[] convertInputStreamToByteArray(InputStream is) throws IOException
+	{
+		BufferedInputStream bis = new BufferedInputStream(is);
+		ByteArrayOutputStream buf = new ByteArrayOutputStream();
+		int result = bis.read();
+		while(result !=-1)
+		{
+			byte b = (byte)result;
+			buf.write(b);
+			result = bis.read();
+		}
+		return buf.toByteArray();
+	}
+
 }

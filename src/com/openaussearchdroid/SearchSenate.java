@@ -21,6 +21,7 @@ import android.widget.Spinner;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
+import android.widget.Toast;
 import android.widget.AdapterView.OnItemSelectedListener;
 
 
@@ -74,7 +75,8 @@ public class SearchSenate extends Activity
 				"?key=" + oakey +
 				"&state=" + stateSearch +
 				"&output=json";
-
+				Toast toast = Toast.makeText(getApplicationContext(), "searching...", Toast.LENGTH_LONG);
+				toast.show();
 				new PerformSenateSearch().execute(urlString);
 				previousState = stateSearch;
 
@@ -121,13 +123,21 @@ public class SearchSenate extends Activity
 		@Override
 		protected void onPostExecute(JSONArray jsonr)
 		{
+			Context context = _view.getContext();
 			if (jsonr == null)
 			{
+				TextView noResultsMessage = new TextView(context);
+				noResultsMessage.setText("An error occured\nNo results were found.");
+				TableRow tableRow = new TableRow(context);
+				tableRow.addView(noResultsMessage);
+				_innerlayout.addView(tableRow);
+				Log.e("jsonr is null", "on post exec in Perform Senate Search");
 				return;
 			}
+
 			for(int j = 0; j < jsonr.length(); j++)
 			{
-				Context context = _view.getContext();
+				context = _view.getContext();
 				TableRow tabr = new TableRow(context);
 				ImageView iv = new ImageView(context);
 				JSONObject json;

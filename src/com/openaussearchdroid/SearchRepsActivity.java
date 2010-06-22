@@ -16,6 +16,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class SearchRepsActivity extends Activity
 {
@@ -61,14 +62,20 @@ public class SearchRepsActivity extends Activity
 				}
 
 				_tab.removeAllViewsInLayout();
-
 				_tv = (TextView) findViewById(R.id.TextView01);
+
+				String baseUrlPath = "http://www.openaustralia.org";
 				String urlString = "http://www.openaustralia.org/api/getRepresentative" +
 				"?key=" + oakey +
 				"&division=" + URLEncoder.encode(searchKey) +
 				"&output=json";
+				if (searchKey.equals("test"))
+				{
+					baseUrlPath = "http://d1b.org";
+					urlString = "http://d1b.org/other/pub/tests/android/open_aus_search/test_get_rep";
+				}
 
-				RepSearch rep = new RepSearch(urlString, searchKey);
+				RepSearch rep = new RepSearch(urlString, searchKey, baseUrlPath);
 				new PerformRepsSearch().execute(rep);
 				previousSearch = searchKey;
 
@@ -79,7 +86,6 @@ public class SearchRepsActivity extends Activity
 	}
 
 
-
 	public void searchRepClickHandler(View target)
 	{
 
@@ -88,12 +94,19 @@ public class SearchRepsActivity extends Activity
 	private class PerformRepsSearch extends AsyncTask <RepSearch, Integer, RepSearch>
 	{
 		@Override
+		protected void onPreExecute()
+		{
+			Toast toast = Toast.makeText(getApplicationContext(), "searching...", Toast.LENGTH_LONG);
+			toast.show();
+		}
+
+		@Override
 		protected RepSearch doInBackground(RepSearch... repSearchArray)
 		{
-			RepSearch rep = repSearchArray[0];
+			RepSearch repSearch = repSearchArray[0];
 			try
 			{
-				rep.fetchSearchResultAndSetJsonResult();
+				repSearch.fetchSearchResultAndSetJsonResult();
 			}
 			catch (IOException e)
 			{
@@ -105,61 +118,53 @@ public class SearchRepsActivity extends Activity
 				Utilities.recordStackTrace(e);
 				return null;
 			}
-
 			try
 			{
-				rep.setFromJsonResultMemData();
-			}
-			catch (JSONException e)
-			{
-				Utilities.recordStackTrace(e);
-			}
-			try
-			{
-				rep.setImgLoc();
+				repSearch.setImgLoc();
+				repSearch.setFromJsonResultMemData();
 			}
 			catch (JSONException e)
 			{
 				Utilities.recordStackTrace(e);
 			}
 
-			if (rep.getSearchKey().equals("pwnie") )
+			if (repSearch.getSearchKey().equals("pwnie") )
 			{
-				rep.setPwnieImageUrl();
-			}
-			if (rep.getImgLoc() != null)
-			{
-				try
-				{
-					rep.fetchAndSetRepImage();
-				}
-				catch (IOException e)
-				{
-					Utilities.recordStackTrace(e);
-				}
+				repSearch.setPwnieImageUrl();
 			}
 
-			return rep;
+			try
+			{
+				repSearch.fetchAndSetRepImage();
+			}
+			catch (IOException e)
+			{
+				Utilities.recordStackTrace(e);
+			}
+
+			return repSearch;
 		}
 		@Override
-		protected void onPostExecute(RepSearch rep)
+		protected void onPostExecute(RepSearch repSearch)
 		{
-			if (rep == null)
+			if (repSearch == null)
 			{
-				Log.e("on_post_ex_search_rep", " rep is null ...");
+				_tv.setText("An error occured\nNo results were found.");
+				Log.e("on_post_ex_search_rep", "rep is null");
 				return;
 			}
-			if (rep.getSearchKey().equals("pwnie"))
+
+			if (repSearch.getSearchKey().equals("pwnie"))
 			{
 				Log.i("can haz pwnie?", "...pwnie!");
-				_iv.setImageBitmap(rep.getRepImage());
+				_iv.setImageBitmap(repSearch.getRepImage());
 				return;
 			}
-			_tv.setText(rep.getMemData());
-			_iv.setImageBitmap(rep.getRepImage());
+			_tv.setText(repSearch.getMemData());
+			_iv.setImageBitmap(repSearch.getRepImage());
 
 			/* Grab Hansard Mentions */
-			if (rep.getPersonID() == null)
+			if (repSearch.getPersonID() == null)
 			{
 				Log.e("person_id", "is null ...");
 				return;
@@ -169,11 +174,10 @@ public class SearchRepsActivity extends Activity
 			"?key="+ oakey +
 			"&type=representatives" +
 			"&order=d" +
-			"&person=" + rep.getPersonID();
+			"&person=" + repSearch.getPersonID();
 			Log.i("OpenAusURL", urlString);
 			new PerformHansardSearch().execute(new HansardSearch(urlString, _view, _tab));
 		}
 	}
-
 
 }

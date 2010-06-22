@@ -59,7 +59,11 @@ public class PerformHansardSearch extends AsyncTask <HansardSearch, Integer, JSO
 	{
 		if (json == null)
 		{
+			TextView noResultsMessage = new TextView(v.getContext());
+			noResultsMessage.setText("An error occured\nNo results were found.");
+			hansInnerLayout.addView(noResultsMessage);
 			Log.e("json is null", "on post exec in PerformHansardSearch");
+
 			return;
 		}
 		JSONObject jsonD;

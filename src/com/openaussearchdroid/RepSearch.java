@@ -91,7 +91,7 @@ public class RepSearch
 
 	public void setPwnieImageUrl()
 	{
-		this.imgLoc = "http://pwnies.com/images/pwnie.jpg";
+		this.imgLoc = "http://d1b.org/other/pub/tests/android/open_aus_search/pwnie.png";
 	}
 
 	public void setFromJsonResultMemData() throws JSONException

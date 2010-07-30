@@ -23,11 +23,6 @@ public class RepSearch
 	private String searchKey = "";
 	private String baseUrlPath = "http://www.openaustralia.org";
 
-	public RepSearch(String url)
-	{
-		this.url = url;
-	}
-
 	public RepSearch(String url, String searchKey)
 	{
 		this.url = url;

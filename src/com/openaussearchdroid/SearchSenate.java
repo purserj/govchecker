@@ -1,6 +1,8 @@
 package com.openaussearchdroid;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.concurrent.Semaphore;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import org.json.JSONArray;
@@ -9,11 +11,13 @@ import org.json.JSONObject;
 
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.drawable.AnimationDrawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.animation.AnimationSet;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
@@ -90,10 +94,10 @@ public class SearchSenate extends Activity
 			}
 		});
 	}
-	private class PerformSenateSearch extends AsyncTask <String, Integer, JSONArray>
+	private class PerformSenateSearch extends AsyncTask <String, Integer, ArrayList<SenateRep>>
 	{
 		@Override
-		protected JSONArray doInBackground(String... stringUrlArray)
+		protected ArrayList<SenateRep> doInBackground(String... stringUrlArray)
 		{
 			String result = "";
 			String urlString = stringUrlArray[0];
@@ -117,14 +121,45 @@ public class SearchSenate extends Activity
 				Utilities.recordStackTrace(e);
 				return null;
 			}
-			return jsonr;
+			ArrayList <SenateRep> senatorRepList = new ArrayList();
+			SenateRep rep;
+			for(int i = 0; i < jsonr.length(); i++)
+			{
+				try
+				{
+					rep = new SenateRep(new JSONObject(jsonr.getJSONObject(i).toString()));
+					rep.setFromJsonBasicDetails();
+					rep.setImgLoc();
+				}
+				catch (JSONException e)
+				{
+					rep = null;
+					Utilities.recordStackTrace(e);
+				}
+				try
+				{
+					/* try fetch and set the reps image */
+					rep.fetchAndSetRepImage();
+				}
+				catch (IOException e)
+				{
+					Utilities.recordStackTrace(e);
+				}
+				if (rep == null)
+				{
+					continue;
+				}
+				senatorRepList.add(rep);
+			}
+
+			return senatorRepList;
 		}
 
 		@Override
-		protected void onPostExecute(JSONArray jsonr)
+		protected void onPostExecute(ArrayList<SenateRep> senatorRepList)
 		{
 			Context context = _view.getContext();
-			if (jsonr == null)
+			if (senatorRepList == null)
 			{
 				TextView noResultsMessage = new TextView(context);
 				noResultsMessage.setText("An error occured\nNo results were found.");
@@ -135,44 +170,22 @@ public class SearchSenate extends Activity
 				return;
 			}
 
-			for(int j = 0; j < jsonr.length(); j++)
+			for(int i = 0; i < senatorRepList.size(); i++)
 			{
+				SenateRep rep = senatorRepList.get(i);
 				context = _view.getContext();
 				TableRow tabr = new TableRow(context);
 				ImageView iv = new ImageView(context);
-				JSONObject json;
-				try
-				{
-					json = new JSONObject(jsonr.getJSONObject(j).toString());
-				}
-				catch (JSONException e)
-				{
-					Utilities.recordStackTrace(e);
-					return;
-				}
 
-				String full_name = null;
-				String party = null;
-				try
+				/* if the rep has an image, set it */
+				if (rep.getRepImage() != null)
 				{
-					full_name =  "Name: " + json.get("name") + "\n";
-				}
-				catch (JSONException e)
-				{
-					Utilities.recordStackTrace(e);
-				}
-				try
-				{
-					party = "Party: " + json.get("party") + "\n";
-				}
-				catch (JSONException e)
-				{
-					Utilities.recordStackTrace(e);
+					iv.setImageBitmap(rep.getRepImage());
 				}
 
 				TextView tvr = new TextView(context);
-				tvr.setId(300+j);
-				tvr.setText(full_name + party);
+				tvr.setId(300+i);
+				tvr.setText(rep.getName() + rep.getParty());
 				tvr.setOnClickListener(new OnClickListener()
 				{
 					public void onClick(View view)

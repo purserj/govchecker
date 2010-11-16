@@ -11,6 +11,7 @@ import org.json.JSONObject;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.drawable.AnimationDrawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -94,10 +95,10 @@ public class SearchSenate extends Activity
 			}
 		});
 	}
-	private class PerformSenateSearch extends AsyncTask <String, Integer, ArrayList<SenateRep>>
+	private class PerformSenateSearch extends AsyncTask <String, Integer, ArrayList<Rep_Object>>
 	{
 		@Override
-		protected ArrayList<SenateRep> doInBackground(String... stringUrlArray)
+		protected ArrayList<Rep_Object> doInBackground(String... stringUrlArray)
 		{
 			String result = "";
 			String urlString = stringUrlArray[0];
@@ -121,30 +122,60 @@ public class SearchSenate extends Activity
 				Utilities.recordStackTrace(e);
 				return null;
 			}
-			ArrayList <SenateRep> senatorRepList = new ArrayList();
-			SenateRep rep;
+			ArrayList <Rep_Object> senatorRepList = new ArrayList();
+			
 			for(int i = 0; i < jsonr.length(); i++)
 			{
+				Rep_Object rep;
+				String repResult = null;
 				try
 				{
-					rep = new SenateRep(new JSONObject(jsonr.getJSONObject(i).toString()));
-					rep.setFromJsonBasicDetails();
-					rep.setImgLoc();
+					rep = new Rep_Object();
+					JSONObject jsonobj = jsonr.getJSONObject(i);
+					JSONArray repJson = null;
+					String repString = "http://www.openaustralia.org/api/getSenator" +
+					"?key=" + oakey +
+					"&id=" + jsonobj.getString("person_id") +
+					"output=js";
+					
+					try{
+						repResult = Utilities.getDataFromUrl(repString, "url");
+					} catch(IOException e){
+						
+					}
+					try{
+						repJson = new JSONArray(repResult);
+					}catch (JSONException e){
+						
+					}
+					for(int k=0;k < repJson.length();k++){
+						JSONObject repJObj = repJson.getJSONObject(k);
+						Log.d("Rep JSON", repJObj.toString());
+						rep.set_FirstName(repJObj.getString("first_name"));
+						rep.set_LastName(repJObj.getString("last_name"));
+						rep.set_House(2);
+						rep.set_Party(repJObj.getString("party"));
+						rep.set_Constituency(repJObj.getString("constituency"));
+						rep.set_DateEntered(repJObj.getString("entered_house"));
+					}
+					
+					//Set out Rep Details from 
+					Log.d("Rep String: ", repString);
+					
 				}
 				catch (JSONException e)
 				{
 					rep = null;
 					Utilities.recordStackTrace(e);
 				}
-				try
+				/*try
 				{
-					/* try fetch and set the reps image */
-					rep.fetchAndSetRepImage();
+					//rep.fetchAndSetRepImage();
 				}
 				catch (IOException e)
 				{
 					Utilities.recordStackTrace(e);
-				}
+				}*/
 				if (rep == null)
 				{
 					continue;
@@ -155,8 +186,8 @@ public class SearchSenate extends Activity
 			return senatorRepList;
 		}
 
-		@Override
-		protected void onPostExecute(ArrayList<SenateRep> senatorRepList)
+		//@Override
+		protected void onPostExecute(ArrayList<Rep_Object> senatorRepList)
 		{
 			Context context = _view.getContext();
 			if (senatorRepList == null)
@@ -172,25 +203,28 @@ public class SearchSenate extends Activity
 
 			for(int i = 0; i < senatorRepList.size(); i++)
 			{
-				SenateRep rep = senatorRepList.get(i);
+				final Rep_Object rep = senatorRepList.get(i);
 				context = _view.getContext();
 				TableRow tabr = new TableRow(context);
 				ImageView iv = new ImageView(context);
 
 				/* if the rep has an image, set it */
-				if (rep.getRepImage() != null)
+				/*if (rep.getRepImage() != null)
 				{
 					iv.setImageBitmap(rep.getRepImage());
-				}
+				}*/
 
 				TextView tvr = new TextView(context);
 				tvr.setId(300+i);
-				tvr.setText(rep.getName() + rep.getParty());
+				tvr.setText(rep.get_Name() + "\n\n" + rep.get_Party());
 				tvr.setOnClickListener(new OnClickListener()
 				{
 					public void onClick(View view)
 					{
+						Intent repIntent = new Intent(view.getContext(), Rep_Display.class);
+						Rep_Display.rep = rep;
 						view.setBackgroundColor(1);
+						startActivityForResult(repIntent,0);
 					}
 				});
 				tabr.addView(iv);

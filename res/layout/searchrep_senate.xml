@@ -16,7 +16,12 @@
 			android:layout_height="fill_parent" 
 			android:layout_width="fill_parent" 
 			android:orientation="vertical">
-		<TableLayout android:id="@+id/SenateTable" android:layout_width="wrap_content" android:layout_height="wrap_content"></TableLayout></LinearLayout>
+			<TableLayout 
+				android:id="@+id/SenateTable" 
+				android:layout_width="wrap_content" 
+				android:layout_height="wrap_content">
+				</TableLayout>
+			</LinearLayout>
 	</ScrollView>
 
 </LinearLayout>

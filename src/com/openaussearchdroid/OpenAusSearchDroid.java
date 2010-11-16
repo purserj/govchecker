@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 
 
 public class OpenAusSearchDroid extends Activity
@@ -14,6 +15,8 @@ public class OpenAusSearchDroid extends Activity
 	private Button repbutt;
 	private Button senbutt;
 	private Button hansbutt;
+	private ImageView oaLogo;
+	private OpenAusDB dh;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState)
@@ -22,7 +25,10 @@ public class OpenAusSearchDroid extends Activity
 		setContentView(R.layout.main);
 		repbutt = (Button) findViewById(R.id.SearchRep_Reps);
 		senbutt = (Button) findViewById(R.id.SearchRep_Senate);
-		hansbutt = (Button) findViewById(R.id.SearchHansard);
+		oaLogo = (ImageView) findViewById(R.id.oaLogo);
+		oaLogo.setImageResource(R.drawable.oa);
+		//hansbutt = (Button) findViewById(R.id.SearchHansard);
+		this.dh = new OpenAusDB(this);
 
 		repbutt.setOnClickListener(new View.OnClickListener()
 		{
@@ -44,7 +50,7 @@ public class OpenAusSearchDroid extends Activity
 			}
 		});
 
-		hansbutt.setOnClickListener(new View.OnClickListener()
+		/*hansbutt.setOnClickListener(new View.OnClickListener()
 		{
 			public void onClick(View v)
 			{
@@ -52,7 +58,7 @@ public class OpenAusSearchDroid extends Activity
 				Intent myIntent = new Intent(v.getContext(), SearchHansardActivity.class);
 				startActivityForResult(myIntent, 0);
 			}
-		});
+		});*/
 
 	}
 	@Override

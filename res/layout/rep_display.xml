@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  android:layout_width="fill_parent"
+  android:layout_height="wrap_content">
+<TextView 
+	android:text="" 
+	android:id="@+id/NameTextView" 
+	android:layout_width="fill_parent" 
+	android:layout_height="wrap_content"
+	style="@style/HeaderText"
+	android:gravity="center_vertical|center_horizontal" 
+	android:layout_centerInParent="false" 
+	android:layout_centerHorizontal="true">
+	</TextView>
+
+<TableLayout 
+	android:layout_centerHorizontal="true" 
+	android:layout_below="@+id/NameTextView" 
+	android:layout_height="wrap_content" 
+	android:id="@+id/TableLayout01" 
+	android:layout_width="fill_parent">
+	<TableRow 
+		android:layout_centerHorizontal="true"  
+		android:layout_height="wrap_content" 
+		android:id="@+id/HouseRow" 
+		android:layout_width="fill_parent">
+		<TextView 
+			android:layout_centerHorizontal="true" 
+			android:layout_height="wrap_content" 
+			android:visibility="visible" 
+			android:layout_width="fill_parent" 
+			android:id="@+id/HouseLabel" 
+			android:text="House">
+			</TextView>
+		<TextView 
+			android:layout_centerHorizontal="true" 
+			android:layout_below="@+id/TextView01" 
+			android:layout_height="wrap_content" 
+			android:layout_width="fill_parent" 
+			android:id="@+id/HouseContent">
+			</TextView>
+		</TableRow>
+		<TableRow 
+		android:layout_centerHorizontal="true" 
+		android:layout_below="@+id/HouseRow" 
+		android:layout_height="wrap_content" 
+		android:id="@+id/PartyRow" 
+		android:layout_width="fill_parent">
+		<TextView 
+			android:layout_centerHorizontal="true" 
+			android:layout_below="@+id/NameTextView" 
+			android:layout_height="wrap_content" 
+			android:visibility="visible" 
+			android:layout_width="fill_parent" 
+			android:id="@+id/PartyLabel" 
+			android:text="Party">
+			</TextView>
+		<TextView 
+			android:layout_centerHorizontal="true" 
+			android:layout_below="@+id/TextView01" 
+			android:layout_height="wrap_content" 
+			android:layout_width="fill_parent" 
+			android:id="@+id/PartyContent">
+			</TextView>
+		</TableRow>
+		<TableRow 
+		android:layout_centerHorizontal="true" 
+		android:layout_below="@+id/PartyRow" 
+		android:layout_height="wrap_content" 
+		android:id="@+id/DateRow" 
+		android:layout_width="fill_parent">
+		<TextView 
+			android:layout_centerHorizontal="true"  
+			android:layout_height="wrap_content" 
+			android:visibility="visible" 
+			android:layout_width="fill_parent" 
+			android:id="@+id/DateLabel" 
+			android:text="Date Entered Parliament">
+			</TextView>
+		<TextView 
+			android:layout_height="wrap_content" 
+			android:layout_width="fill_parent" 
+			android:id="@+id/DateContent">
+			</TextView>
+		</TableRow>
+	</TableLayout>
+		
+
+
+
+</RelativeLayout>

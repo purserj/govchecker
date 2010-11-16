@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu
+  xmlns:android="http://schemas.android.com/apk/res/android">
+<item android:title="My Searchs" android:id="@+id/Menu_My_Searchs"></item>
+<item android:title="Search Reps" android:id="@+id/Menu_Reps"></item>
+<item android:title="Search Senate" android:id="@+id/Menu_Senate"></item>
+<item android:title="Search Hansard" android:id="@+id/Menu_Hansard"></item>
+</menu>

@@ -1,23 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
-<TableLayout android:id="@+id/TableLayout01"
-	android:layout_width="fill_parent" 
-	android:layout_height="fill_parent" 
-	xmlns:android="http://schemas.android.com/apk/res/android">
+<RelativeLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	android:id="@+id/FPLayout"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent">
+	<ImageView 
+		android:layout_height="wrap_content" 
+		android:layout_width="wrap_content"  
+		android:id="@+id/oaLogo"
+		android:gravity="center">
+		</ImageView>
+	<Button 
+		android:text="Search House of Reps" 
+		android:id="@+id/SearchRep_Reps" 
+		android:layout_width="fill_parent" 
+		android:layout_height="wrap_content"
+		android:layout_below="@+id/oaLogo">
+		</Button>
+	<Button 
+		android:text="Search Senate" 
+		android:id="@+id/SearchRep_Senate" 
+		android:layout_width="fill_parent" 
+		android:layout_height="wrap_content"
+		android:layout_below="@+id/SearchRep_Reps">
+		</Button>
 
-
-<Button android:text="Search House of Reps" 
-	android:id="@+id/SearchRep_Reps" 
-	android:layout_width="wrap_content" 
-	android:layout_height="wrap_content">
-	</Button>
-<Button android:text="Search Senate" 
-	android:id="@+id/SearchRep_Senate" 
-	android:layout_width="wrap_content" 
-	android:layout_height="wrap_content">
-	</Button>
-<Button android:text="Search Hansard" 
-	android:id="@+id/SearchHansard" 
-	android:layout_width="wrap_content" 
-	android:layout_height="wrap_content">
-	</Button>
-</TableLayout>
+</RelativeLayout>

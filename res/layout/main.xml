@@ -8,7 +8,10 @@
 		android:layout_height="wrap_content" 
 		android:layout_width="wrap_content"  
 		android:id="@+id/oaLogo"
-		android:gravity="center">
+		android:scaleType="center"
+		android:layout_centerHorizontal="true"
+		android:layout_marginTop="5dip"
+		>
 		</ImageView>
 	<Button 
 		android:text="Search House of Reps" 
@@ -22,7 +25,8 @@
 		android:id="@+id/SearchRep_Senate" 
 		android:layout_width="fill_parent" 
 		android:layout_height="wrap_content"
-		android:layout_below="@+id/SearchRep_Reps">
+		android:layout_below="@+id/SearchRep_Reps"
+		>
 		</Button>
 
 </RelativeLayout>

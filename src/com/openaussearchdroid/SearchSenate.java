@@ -157,6 +157,7 @@ public class SearchSenate extends Activity
 						rep.set_Party(repJObj.getString("party"));
 						rep.set_Constituency(repJObj.getString("constituency"));
 						rep.set_DateEntered(repJObj.getString("entered_house"));
+						rep.set_pID(repJObj.getInt("person_id"));
 					}
 					
 					//Set out Rep Details from 

@@ -16,4 +16,12 @@
 <style name="mainApp">
 		<item name="android:windowBackground">@color/background_blue</item>
 </style>
+<style name="RepName">
+	<item name="android:textStyle">bold</item>
+	<item name="android:background">#000000</item>
+	<item name="android:textColor">#FFFFFF</item>
+</style>
+<style name="RepLabel">
+	<item name="android:textStyle">bold</item>
+</style>
 </resources>

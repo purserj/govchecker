@@ -9,6 +9,7 @@ import com.openaussearchdroid.SearchRepsActivity.PerformRepsSearch;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -26,13 +27,16 @@ public class Rep_Display extends Activity{
 	private TextView _ntv;
 	private ImageView _iv;
 	private Button _repsbutton;
+	private Button _repshansard;
 	private LinearLayout _tab;
 	@SuppressWarnings("unused")
 	private TextView _tvhans;
 	private TextView _htv;
 	private TextView _ptv;
 	private TextView _dtv;
+	private TextView _distv;
 	private View _view;
+	private String ipath;
 	public static Rep_Object rep;
 	
 	public void onCreate(Bundle savedInstanceState){
@@ -44,10 +48,13 @@ public class Rep_Display extends Activity{
 		/*_iv = (ImageView) findViewById(R.id.MemberPic);
 		_tab = (LinearLayout) findViewById(R.id.innerlayout);
 		_tvhans = (TextView) findViewById(R.id.hansardmentions_label);*/
+		_repshansard = (Button) findViewById(R.id.RepsHansardButton);
 		_ntv = (TextView) findViewById(R.id.NameTextView);
 		_htv = (TextView) findViewById(R.id.HouseContent);
 		_ptv = (TextView) findViewById(R.id.PartyContent);
 		_dtv = (TextView) findViewById(R.id.DateContent);
+		_distv = (TextView) findViewById(R.id.DivisionContent);
+		_iv = (ImageView) findViewById(R.id.RepImage);
 		Log.d("Rep Display, Rep name: ", rep.get_Name());
 		_ntv.setText(rep.get_Name());
 		if(rep.get_House() == 1){
@@ -57,94 +64,28 @@ public class Rep_Display extends Activity{
 		}
 		_ptv.setText(rep.get_Party());
 		_dtv.setText(rep.get_DateEntered());
-	}
-
-	private class PerformRepsSearch extends AsyncTask <RepSearch, Integer, RepSearch>
-	{
-		@Override
-		protected void onPreExecute()
-		{
-			Toast toast = Toast.makeText(getApplicationContext(), "searching...", Toast.LENGTH_LONG);
-			toast.show();
-		}
-
-		@Override
-		protected RepSearch doInBackground(RepSearch... repSearchArray)
-		{
-			RepSearch repSearch = repSearchArray[0];
-			try
-			{
-				repSearch.fetchSearchResultAndSetJsonResult();
-			}
-			catch (IOException e)
-			{
-				Utilities.recordStackTrace(e);
-				return null;
-			}
-			catch (JSONException e)
-			{
-				Utilities.recordStackTrace(e);
-				return null;
-			}
-			try
-			{
-				repSearch.setImgLoc();
-				repSearch.setFromJsonResultMemData();
-			}
-			catch (JSONException e)
-			{
-				Utilities.recordStackTrace(e);
-			}
-
-			if (repSearch.getSearchKey().equals("pwnie") )
-			{
-				repSearch.setPwnieImageUrl();
-			}
-
-			try
-			{
-				repSearch.fetchAndSetRepImage();
-			}
-			catch (IOException e)
-			{
-				Utilities.recordStackTrace(e);
-			}
-
-			return repSearch;
-		}
-		@Override
-		protected void onPostExecute(RepSearch repSearch)
-		{
-			if (repSearch == null)
-			{
-				_tv.setText("An error occured\nNo results were found.");
-				Log.e("on_post_ex_search_rep", "rep is null");
-				return;
-			}
-
-			if (repSearch.getSearchKey().equals("pwnie"))
-			{
-				Log.i("can haz pwnie?", "...pwnie!");
-				_iv.setImageBitmap(repSearch.getRepImage());
-				return;
-			}
+		_distv.setText(rep.get_Constituency());
+		ipath = "http://www.openaustralia.org/images/mpsL/"+Integer.toString(rep.get_personID())+".jpg";
+		
+		try{
+			Bitmap bm = Utilities.fetchImage(ipath);
+			_iv.setImageBitmap(bm);
+		} catch(IOException e){
 			
-			_iv.setImageBitmap(repSearch.getRepImage());
-
-			/* Grab Hansard Mentions */
-			if (repSearch.getPersonID() == null)
-			{
-				Log.e("person_id", "is null ...");
-				return;
-			}
-			/* XXX: perform code review of class member access - if is potentially null */
-			String urlString = "http://www.openaustralia.org/api/getDebates" +
-			"?key="+ oakey +
-			"&type=senate" +
-			"&order=d" +
-			"&person=" + repSearch.getPersonID();
-			Log.i("OpenAusURL", urlString);
-			new PerformHansardSearch().execute(new HansardSearch(urlString, _view, _tab));
 		}
+		
+		_repshansard.setOnClickListener(new View.OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				Intent hansIntent = new Intent(v.getContext(), HansardSearchDisplay.class);
+				hansIntent.putExtra("personId", rep.get_personID());
+				hansIntent.putExtra("searchHouse", rep.get_House());
+				hansIntent.putExtra("searchType", 3);
+				startActivityForResult(hansIntent, 0);
+				
+			}
+		});
 	}
+
 }

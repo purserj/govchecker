@@ -127,9 +127,9 @@ public class Rep_Object {
 		return left_reason;
 	}
 	
-	public String get_personID()
+	public Integer get_personID()
 	{
-		return "1";
+		return this.PID;
 	}
 
 }

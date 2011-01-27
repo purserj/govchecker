@@ -67,11 +67,11 @@ public class SearchHansardActivity extends Activity
 				Toast toast = Toast.makeText(getApplicationContext(), "searching...", Toast.LENGTH_LONG);
 				toast.show();
 
-				new PerformHansardSearch().execute(new HansardSearch(getHansardUrl(), v, hansInnerLayout));
+				/*new PerformHansardSearch().execute(new HansardSearch(getHansardUrl(), v, hansInnerLayout));
 				previousHouseSelection = houseselect.getSelectedItem().toString();
 				previousKeySelection = _et.getText().toString();
 
-				searchInProgress.set(false);
+				searchInProgress.set(false);*/
 				Log.i("search_in_progress", " search HANSARD STOPPED");
 			}
 		});

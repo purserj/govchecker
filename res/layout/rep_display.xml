@@ -8,18 +8,26 @@
 	android:id="@+id/NameTextView" 
 	android:layout_width="fill_parent" 
 	android:layout_height="wrap_content"
-	style="@style/HeaderText"
+	style="@style/RepName"
 	android:gravity="center_vertical|center_horizontal" 
 	android:layout_centerInParent="false" 
 	android:layout_centerHorizontal="true">
 	</TextView>
 
-<TableLayout 
+
+	<ImageView
+		android:id="@+id/RepImage"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_below="@+id/NameTextView">
+		</ImageView>
+		<TableLayout 
 	android:layout_centerHorizontal="true" 
 	android:layout_below="@+id/NameTextView" 
 	android:layout_height="wrap_content" 
 	android:id="@+id/TableLayout01" 
-	android:layout_width="fill_parent">
+	android:layout_width="fill_parent"
+	android:layout_toRightOf="@+id/RepImage">
 	<TableRow 
 		android:layout_centerHorizontal="true"  
 		android:layout_height="wrap_content" 
@@ -31,7 +39,8 @@
 			android:visibility="visible" 
 			android:layout_width="fill_parent" 
 			android:id="@+id/HouseLabel" 
-			android:text="House">
+			android:text="H:"
+			style="@style/RepLabel">
 			</TextView>
 		<TextView 
 			android:layout_centerHorizontal="true" 
@@ -39,6 +48,28 @@
 			android:layout_height="wrap_content" 
 			android:layout_width="fill_parent" 
 			android:id="@+id/HouseContent">
+			</TextView>
+		</TableRow>
+		<TableRow 
+		android:layout_centerHorizontal="true"  
+		android:layout_height="wrap_content" 
+		android:id="@+id/DivisionRow" 
+		android:layout_width="fill_parent">
+		<TextView 
+			android:layout_centerHorizontal="true" 
+			android:layout_height="wrap_content" 
+			android:visibility="visible" 
+			android:layout_width="fill_parent" 
+			android:id="@+id/DivisionLabel" 
+			android:text="D:"
+			style="@style/RepLabel">
+			</TextView>
+		<TextView 
+			android:layout_centerHorizontal="true" 
+			android:layout_below="@+id/TextView01" 
+			android:layout_height="wrap_content" 
+			android:layout_width="fill_parent" 
+			android:id="@+id/DivisionContent">
 			</TextView>
 		</TableRow>
 		<TableRow 
@@ -54,7 +85,8 @@
 			android:visibility="visible" 
 			android:layout_width="fill_parent" 
 			android:id="@+id/PartyLabel" 
-			android:text="Party">
+			android:text="P:"
+			style="@style/RepLabel">
 			</TextView>
 		<TextView 
 			android:layout_centerHorizontal="true" 
@@ -76,7 +108,8 @@
 			android:visibility="visible" 
 			android:layout_width="fill_parent" 
 			android:id="@+id/DateLabel" 
-			android:text="Date Entered Parliament">
+			android:text="DEP:"
+			style="@style/RepLabel">
 			</TextView>
 		<TextView 
 			android:layout_height="wrap_content" 
@@ -86,6 +119,13 @@
 		</TableRow>
 	</TableLayout>
 		
+	<Button
+		android:id="@+id/RepsHansardButton"
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content"
+		android:layout_below="@+id/RepImage"
+		android:text="View Reps Hansard Appearances"
+		></Button>
 
 
 

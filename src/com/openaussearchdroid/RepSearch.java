@@ -91,7 +91,7 @@ public class RepSearch
 
 	public void setImgLoc() throws JSONException
 	{
-		//this.imgLoc = this.baseUrlPath + this.resultJson.getString("image");
+		this.imgLoc = this.baseUrlPath + this.resultJson.getString("image");
 	}
 
 	public void fetchAndSetRepImage() throws IOException

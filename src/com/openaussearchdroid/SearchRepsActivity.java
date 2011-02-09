@@ -234,6 +234,7 @@ public class SearchRepsActivity extends Activity
 				tr.setLayoutParams(new LayoutParams(
 	                    LayoutParams.FILL_PARENT,
 	                    LayoutParams.WRAP_CONTENT)); 
+				tvr.setBackgroundResource(R.drawable.border);
 				tvr.setText(Html.fromHtml("<b>"
 						+rep.get_Name()+" - "+rep.get_Constituency() +"<b>"));
 				tvr.setOnClickListener(new OnClickListener()

@@ -14,7 +14,9 @@ import android.text.Html;
 import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
+import android.widget.TableRow;
 import android.widget.TextView;
+import android.view.LayoutInflater;
 
 public class HansardSearchDisplay extends Activity{
 	
@@ -61,6 +63,7 @@ public class HansardSearchDisplay extends Activity{
 	{
 		private View v;
 		private LinearLayout hansInnerLayout;
+		LayoutInflater inflater = getLayoutInflater();
 
 		@Override
 		protected JSONArray doInBackground(HansardSearch... hansSearchArray)
@@ -125,16 +128,20 @@ public class HansardSearchDisplay extends Activity{
 				{
 					Utilities.recordStackTrace(e);
 				}
-
-				TextView tvr = new TextView(v.getContext());
-				tvr.setId(500+i);
-				String temp = "";
 				
 				try
 				{
-					temp = jsonD.getString("body");
+					JSONObject parent = jsonD.getJSONObject("parent");
+					String temp = "";
+					temp = "<b>" + parent.getString("body") + "</b>";
+					temp += "<br /><i>" + jsonD.getString("hdate") + "</i>";
+					temp += "<br />"+jsonD.getString("body");
+					TableRow tr = (TableRow)inflater.inflate(R.layout.hansardrow, hansInnerLayout, false);
+					TextView tvr = (TextView)tr.findViewById(R.id.content);
+					tvr.setId(500+i);
+					
 					tvr.setText(Html.fromHtml(temp), TextView.BufferType.SPANNABLE );
-					final String oaurl = "http://www.openaustralia.org.au"+jsonD.getString("listurl");
+					final String oaurl = "http://www.openaustralia.org"+jsonD.getString("listurl");
 					Log.d("listurl", jsonD.getString("listurl"));
 					Log.d("Url", oaurl);
 					tvr.setOnClickListener(new View.OnClickListener() {
@@ -146,7 +153,8 @@ public class HansardSearchDisplay extends Activity{
 							startActivityForResult(webView, 0);
 						}
 					});
-					hansInnerLayout.addView(tvr);
+					tvr.setBackgroundResource(R.drawable.border);
+					hansInnerLayout.addView(tr);
 				}
 				catch (JSONException e)
 				{

@@ -16,7 +16,8 @@
 		android:layout_height="wrap_content"
 		android:maxLines="1"
 		android:text="" android:lines="1" android:minLines="1" android:layout_weight="1"
-		android:layout_below="@+id/OptionSpinner">
+		android:layout_below="@+id/OptionSpinner"
+		android:imeOptions="actionDone">
 		</EditText>
 	<Button 
 		android:id="@+id/searchRepButton" 

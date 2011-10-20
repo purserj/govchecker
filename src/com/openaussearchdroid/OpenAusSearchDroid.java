@@ -27,7 +27,7 @@ public class OpenAusSearchDroid extends Activity
 		senbutt = (Button) findViewById(R.id.SearchRep_Senate);
 		oaLogo = (ImageView) findViewById(R.id.oaLogo);
 		oaLogo.setImageResource(R.drawable.oa);
-		//hansbutt = (Button) findViewById(R.id.SearchHansard);
+		hansbutt = (Button) findViewById(R.id.SearchHansard);
 		this.dh = new OpenAusDB(this);
 
 		repbutt.setOnClickListener(new View.OnClickListener()
@@ -50,7 +50,7 @@ public class OpenAusSearchDroid extends Activity
 			}
 		});
 
-		/*hansbutt.setOnClickListener(new View.OnClickListener()
+		hansbutt.setOnClickListener(new View.OnClickListener()
 		{
 			public void onClick(View v)
 			{
@@ -58,7 +58,7 @@ public class OpenAusSearchDroid extends Activity
 				Intent myIntent = new Intent(v.getContext(), SearchHansardActivity.class);
 				startActivityForResult(myIntent, 0);
 			}
-		});*/
+		});
 
 	}
 	@Override

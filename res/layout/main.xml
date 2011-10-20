@@ -28,5 +28,11 @@
 		android:layout_below="@+id/SearchRep_Reps"
 		>
 		</Button>
+	<Button
+	    android:text="Search Hansard"
+	    android:id="@+id/SearchHansard"
+	    android:layout_width="fill_parent"
+	    android:layout_height="wrap_content"
+	    android:layout_below="@+id/SearchRep_Senate"></Button>
 
 </RelativeLayout>

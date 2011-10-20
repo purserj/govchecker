@@ -218,6 +218,7 @@ public class SearchSenate extends Activity
 				TextView tvr = new TextView(context);
 				tvr.setId(300+i);
 				tvr.setText(rep.get_Name() + "\n\n" + rep.get_Party());
+				tvr.setBackgroundColor(1);
 				tvr.setOnClickListener(new OnClickListener()
 				{
 					public void onClick(View view)

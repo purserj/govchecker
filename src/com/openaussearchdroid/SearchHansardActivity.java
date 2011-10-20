@@ -64,14 +64,14 @@ public class SearchHansardActivity extends Activity
 				}
 				LinearLayout hansInnerLayout = (LinearLayout) findViewById(R.id.hansinnerlayout);
 				hansInnerLayout.removeAllViewsInLayout();
+				try{
+					searchHansardButtonClick(hansInnerLayout);
+				}catch (IOException e){
+					
+				}
 				Toast toast = Toast.makeText(getApplicationContext(), "searching...", Toast.LENGTH_LONG);
 				toast.show();
 
-				/*new PerformHansardSearch().execute(new HansardSearch(getHansardUrl(), v, hansInnerLayout));
-				previousHouseSelection = houseselect.getSelectedItem().toString();
-				previousKeySelection = _et.getText().toString();
-
-				searchInProgress.set(false);*/
 				Log.i("search_in_progress", " search HANSARD STOPPED");
 			}
 		});
@@ -85,6 +85,7 @@ public class SearchHansardActivity extends Activity
 		"&type=" + houseselect.getSelectedItem().toString() +
 		"&search=" + URLEncoder.encode(_et.getText().toString()) +
 		"&output=json";
+		Log.i("Hansard URL", urlString);
 		return urlString;
 	}
 

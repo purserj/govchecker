@@ -9,7 +9,8 @@
 			<EditText android:text="" 
 				android:id="@+id/SearchHansardText" 
 				android:layout_width="fill_parent" 
-				android:layout_height="wrap_content">
+				android:layout_height="wrap_content"
+				android:layout_span="2">
 				</EditText>
 			
 	</TableRow>
@@ -19,12 +20,15 @@
 	<Button android:text="Search Hansard" 
 				android:id="@+id/SearchHansardButton" 
 				android:layout_width="fill_parent" 
-				android:layout_height="wrap_content">
+				android:layout_height="wrap_content"
+				>
 				</Button>
-	<Spinner android:id="@+id/HouseSelector" 
-		android:layout_width="fill_parent" 
-		android:layout_height="wrap_content">
-		</Spinner>
+
+	<Spinner
+	    android:id="@+id/HouseSelector"
+	    android:layout_width="fill_parent"
+	    android:layout_height="wrap_content" ></Spinner>
+
 	</TableRow>
 
 	<TableRow android:id="@+id/TableRow03" 
@@ -32,13 +36,4 @@
 		android:layout_height="wrap_content">
 
 </TableRow>
-
-
-
-
-
-<LinearLayout android:id="@+id/LinearLayout01" android:layout_width="wrap_content" android:layout_height="wrap_content"><ScrollView android:id="@+id/ScrollView01" android:layout_width="fill_parent" android:layout_height="fill_parent">
-				
-		<LinearLayout android:id="@+id/hansinnerlayout" android:layout_width="fill_parent" android:layout_height="fill_parent" android:orientation="vertical">
-			</LinearLayout></ScrollView></LinearLayout>
 </TableLayout>

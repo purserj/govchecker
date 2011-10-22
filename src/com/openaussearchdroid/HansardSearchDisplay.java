@@ -34,22 +34,26 @@ public class HansardSearchDisplay extends Activity{
 		Bundle extras = getIntent().getExtras();
 		v = new View(this);
 		
+		url += "&type=";
+		url += extras.getString("searchHouse");
+		/*switch(extras.getInt("searchHouse")){
+		case(1): //House of Reps
+			url += "representatives";
+			break;
+		case(2): //Senate
+			url += "senate";
+		break;
+		}*/
+		
 		switch(extras.getInt("searchType")){
 		case(1): //Date Search
 			break;
 		case(2): //Word Search
-			
+			url += "&search=";
+			url += "\"" + extras.getString("searchTerm") + "\"";
 			break;
 		case(3): //Person Search
-			url += "&type=";
-			switch(extras.getInt("searchHouse")){
-			case(1): //House of Reps
-				url += "representatives";
-				break;
-			case(2): //Senate
-				url += "senate";
-			break;
-			}
+			
 			url += "&person=" + extras.getInt("personId");
 			break;
 		}
@@ -71,6 +75,7 @@ public class HansardSearchDisplay extends Activity{
 			HansardSearch hansSearch = hansSearchArray[0];
 			this.v = hansSearch.getView();
 			this.hansInnerLayout = hansSearch.getHansInnerLayout();
+			this.hansInnerLayout.removeAllViews();
 			try
 			{
 				hansSearch.fetchSearchResultAndSetJsonResult();

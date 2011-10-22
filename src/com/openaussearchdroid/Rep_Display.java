@@ -35,6 +35,7 @@ public class Rep_Display extends Activity{
 	private TextView _ptv;
 	private TextView _dtv;
 	private TextView _distv;
+	private String house;
 	private View _view;
 	private String ipath;
 	public static Rep_Object rep;
@@ -59,8 +60,10 @@ public class Rep_Display extends Activity{
 		_ntv.setText(rep.get_Name());
 		if(rep.get_House() == 1){
 			_htv.setText("House of Representatives");
+			house = "representatives";
 		} else {
 			_htv.setText("Senate");
+			house = "senate";
 		}
 		_ptv.setText(rep.get_Party());
 		_dtv.setText(rep.get_DateEntered());
@@ -80,7 +83,7 @@ public class Rep_Display extends Activity{
 			public void onClick(View v) {
 				Intent hansIntent = new Intent(v.getContext(), HansardSearchDisplay.class);
 				hansIntent.putExtra("personId", rep.get_personID());
-				hansIntent.putExtra("searchHouse", rep.get_House());
+				hansIntent.putExtra("searchHouse", house);
 				hansIntent.putExtra("searchType", 3);
 				startActivityForResult(hansIntent, 0);
 				

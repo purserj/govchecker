@@ -1,14 +1,13 @@
 package com.openaussearchdroid;
 
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
+import android.graphics.Bitmap;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import android.graphics.Bitmap;
+import java.io.IOException;
+import java.util.ArrayList;
 
 public class RepSearch
 {
@@ -24,6 +23,7 @@ public class RepSearch
 	private String imgLoc;
 	private Bitmap repImage;
 	private Integer stype;
+    private JSONArray office;
     public static ArrayList<Rep_Object> reps = null;
     
 	private String searchKey = "";
@@ -116,6 +116,11 @@ public class RepSearch
 			rep.set_Party(this.resultJson.getString("party"));
 			rep.set_Constituency(this.resultJson.getString("constituency"));
 			rep.set_House(Integer.parseInt(this.resultJson.getString("house")));
+            office = this.resultJson.getJSONArray("office");
+            if(office != null){
+                JSONObject obj = office.getJSONObject(0);
+                rep.set_Position(obj.getString("position"));
+            }
 			reps.add(rep);	
 		} else if (this.stype == 2) {
 			for(int i = 0; i < resultJsonArray.length(); i++)
@@ -141,6 +146,11 @@ public class RepSearch
 				rep.set_Party(obj.getString("party"));
 				rep.set_Constituency(obj.getString("constituency"));
 				rep.set_House(Integer.parseInt(obj.getString("house")));
+                office = obj.getJSONArray("office");
+                if(office != null){
+                    JSONObject objoff = office.getJSONObject(0);
+                    rep.set_Position(objoff.getString("position"));
+                }
 				reps.add(rep);
 			}
 		}

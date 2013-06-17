@@ -1,16 +1,8 @@
 package com.openaussearchdroid;
 
-import java.io.IOException;
-import java.net.URLEncoder;
-
-import org.json.JSONException;
-
-import com.openaussearchdroid.SearchRepsActivity.PerformRepsSearch;
-
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -18,7 +10,8 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
+
+import java.io.IOException;
 
 public class Rep_Display extends Activity{
 	
@@ -31,6 +24,7 @@ public class Rep_Display extends Activity{
 	private LinearLayout _tab;
 	@SuppressWarnings("unused")
 	private TextView _tvhans;
+    private TextView _postv;
 	private TextView _htv;
 	private TextView _ptv;
 	private TextView _dtv;
@@ -50,6 +44,7 @@ public class Rep_Display extends Activity{
 		_tab = (LinearLayout) findViewById(R.id.innerlayout);
 		_tvhans = (TextView) findViewById(R.id.hansardmentions_label);*/
 		_repshansard = (Button) findViewById(R.id.RepsHansardButton);
+        _postv = (TextView) findViewById(R.id.PosContent);
 		_ntv = (TextView) findViewById(R.id.NameTextView);
 		_htv = (TextView) findViewById(R.id.HouseContent);
 		_ptv = (TextView) findViewById(R.id.PartyContent);
@@ -65,6 +60,7 @@ public class Rep_Display extends Activity{
 			_htv.setText("Senate");
 			house = "senate";
 		}
+        _postv.setText(rep.get_Position());
 		_ptv.setText(rep.get_Party());
 		_dtv.setText(rep.get_DateEntered());
 		_distv.setText(rep.get_Constituency());

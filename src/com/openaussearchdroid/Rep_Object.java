@@ -19,6 +19,7 @@ public class Rep_Object {
 	private Integer house;
 	private String constituency;
 	private String date_entered;
+    private String position;
 	private String date_left;
 	private String left_reason;
 	private String last_updated;
@@ -76,6 +77,10 @@ public class Rep_Object {
 	{
 		date_entered = Dstring;
 	}
+
+    public void set_Position(String pos){
+        position = pos;
+    }
 	
 	public void set_Party(String partyid)
 	{
@@ -131,5 +136,14 @@ public class Rep_Object {
 	{
 		return this.PID;
 	}
+
+    public String get_Position(){
+        String nullpos = "Backbencher";
+        if(this.position != null){
+            return this.position;
+        } else {
+            return nullpos;
+        }
+    }
 
 }

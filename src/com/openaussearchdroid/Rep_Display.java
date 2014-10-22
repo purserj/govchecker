@@ -66,12 +66,12 @@ public class Rep_Display extends Activity{
 		_distv.setText(rep.get_Constituency());
 		ipath = "http://www.openaustralia.org/images/mpsL/"+Integer.toString(rep.get_personID())+".jpg";
 		
-		try{
+		/*try{
 			Bitmap bm = Utilities.fetchImage(ipath);
 			_iv.setImageBitmap(bm);
 		} catch(IOException e){
 			
-		}
+		}*/
 		
 		_repshansard.setOnClickListener(new View.OnClickListener() {
 			

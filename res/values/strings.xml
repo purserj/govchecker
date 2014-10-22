@@ -2,4 +2,5 @@
 <resources>
     <string name="hello">Hello World, OpenAusSearchDroid!</string>
     <string name="app_name">Open Australia Search Droid</string>
+    <string name="res_display_position">Pos:</string>
 </resources>

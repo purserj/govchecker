@@ -19,14 +19,16 @@
 		android:id="@+id/RepImage"
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
-        android:layout_below="@+id/NameTextView">
+        android:layout_below="@+id/NameTextView"
+        android:contentDescription="@string/res_display_rep_display_desc">
 		</ImageView>
 		<TableLayout  
-	android:layout_below="@+id/NameTextView" 
+	android:layout_below="@+id/RepImage" 
 	android:layout_height="wrap_content" 
 	android:id="@+id/TableLayout01" 
 	android:layout_width="fill_parent"
-	android:layout_toRightOf="@+id/RepImage">
+	android:paddingLeft="10dp"
+	>
 
             <TableRow
                     android:layout_height="wrap_content"
@@ -49,17 +51,20 @@
                         android:id="@+id/PosContent"/>
             </TableRow>
 
-            <TableRow  
+           <TableRow  
 		android:layout_height="wrap_content" 
 		android:id="@+id/HouseRow" 
 		android:layout_width="fill_parent">
+
+               
+
 		<TextView  
 			android:layout_height="wrap_content" 
 			android:visibility="visible" 
 			android:layout_width="0dp"
 			android:layout_weight="0.40" 
 			android:id="@+id/HouseLabel" 
-			android:text="H:"
+			android:text="@string/res_display_house"
 			style="@style/RepLabel">
 			</TextView>
 		<TextView  
@@ -79,7 +84,7 @@
 			android:layout_width="0dp"
 			android:layout_weight="0.40" 
 			android:id="@+id/DivisionLabel" 
-			android:text="D:"
+			android:text="@string/res_display_seat"
 			style="@style/RepLabel">
 			</TextView>
 		<TextView 
@@ -99,7 +104,7 @@
 			android:layout_width="0dp"
 			android:layout_weight="0.40" 
 			android:id="@+id/PartyLabel" 
-			android:text="P:"
+			android:text="@string/res_display_party"
 			style="@style/RepLabel">
 			</TextView>
 		<TextView  
@@ -119,7 +124,7 @@
 			android:layout_width="0dp"
 			android:layout_weight="0.40" 
 			android:id="@+id/DateLabel" 
-			android:text="DEP:"
+			android:text="@string/res_display_dep"
 			style="@style/RepLabel">
 			</TextView>
 		<TextView 
@@ -133,11 +138,13 @@
         android:layout_height="wrap_content" 
         android:id="@+id/ButtonRow" 
         android:layout_width="fill_parent">
-		  <Button 
-		      android:id="@+id/RepsHansardButton" 
-		      android:layout_width="fill_parent" 
-		      android:layout_height="wrap_content" 
-		      android:text="View Reps Hansard Appearances" />
+
+			<Button
+			    android:id="@+id/RepsHansardButton"
+			    android:layout_width="fill_parent"
+			    android:layout_height="wrap_content"
+			    android:text="@string/res_hansard_display_button" />
+
 		</TableRow>
 	</TableLayout>
 

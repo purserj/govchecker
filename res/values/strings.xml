@@ -2,5 +2,11 @@
 <resources>
     <string name="hello">Hello World, OpenAusSearchDroid!</string>
     <string name="app_name">Open Australia Search Droid</string>
-    <string name="res_display_position">Pos:</string>
+    <string name="res_display_position">Position:</string>
+    <string name="res_display_house">House</string>
+    <string name="res_display_seat">Seat</string>
+    <string name="res_display_dep">Date Entered Parliament</string>
+    <string name="res_hansard_display_button">View Reps Hansard Appearances</string>
+    <string name="res_display_party">Party</string>
+    <string name="res_display_rep_display_desc">Picture of Representative</string>
 </resources>

@@ -204,6 +204,7 @@ public class SearchRepsActivity extends Activity
 
 			return repSearch;
 		}
+		@SuppressWarnings("deprecation")
 		@Override
 		protected void onPostExecute(RepSearch repSearch)
 		{

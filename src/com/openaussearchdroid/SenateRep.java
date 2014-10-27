@@ -49,7 +49,7 @@ public class SenateRep
 
 	public void fetchAndSetRepImage() throws IOException
 	{
-		this.repImage = Utilities.fetchImage(this.imgLoc);
+		//this.repImage = Utilities.fetchImage(this.imgLoc);
 	}
 
 	public void setFromJsonBasicDetails() throws JSONException

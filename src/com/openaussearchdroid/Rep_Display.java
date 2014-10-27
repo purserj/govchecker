@@ -1,8 +1,11 @@
 package com.openaussearchdroid;
 
+import android.accounts.NetworkErrorException;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -12,6 +15,13 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.io.IOException;
+import java.io.InputStream;
+
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
+import org.apache.http.HttpStatus;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.DefaultHttpClient;
 
 public class Rep_Display extends Activity{
 	
@@ -66,12 +76,7 @@ public class Rep_Display extends Activity{
 		_distv.setText(rep.get_Constituency());
 		ipath = "http://www.openaustralia.org/images/mpsL/"+Integer.toString(rep.get_personID())+".jpg";
 		
-		/*try{
-			Bitmap bm = Utilities.fetchImage(ipath);
-			_iv.setImageBitmap(bm);
-		} catch(IOException e){
-			
-		}*/
+		new GetRepImageTask().execute(ipath);
 		
 		_repshansard.setOnClickListener(new View.OnClickListener() {
 			
@@ -86,5 +91,63 @@ public class Rep_Display extends Activity{
 			}
 		});
 	}
+
+	private class GetRepImageTask extends AsyncTask<String, Void, Bitmap>{
+
+		@Override
+		protected Bitmap doInBackground(String... params) {
+			return downloadBitmap(params[0]);		
+		}
+		
+		protected void onPreExecute(){
+			Log.i("Picture Downloading", "onPreExecute called");
+		}
+		
+		protected void onPostExecute(Bitmap result){
+			Log.i("Picture Downloading", "onPostExecute called");
+			_iv.setImageBitmap(result);
+		}
+		
+		private Bitmap downloadBitmap(String url){
+			final DefaultHttpClient client = new DefaultHttpClient();
+			
+			final HttpGet getRequest = new HttpGet(url);
+			
+			try{
+				HttpResponse response = client.execute(getRequest);
+				final int statuscode = response.getStatusLine().getStatusCode();
+				if(statuscode != HttpStatus.SC_OK){
+					Log.w("Picture Downloading", "Error " + statuscode +
+							" while retrieving " + url);
+					return null;
+				}
+				
+				final HttpEntity entity = response.getEntity();
+				if(entity != null){
+					InputStream inputstream = null;
+					try{
+						inputstream = entity.getContent();
+						
+						final Bitmap bm = BitmapFactory.decodeStream(inputstream);
+						
+						return bm;
+						
+					} finally {
+						if (inputstream != null){
+							inputstream.close();
+						}
+						entity.consumeContent();
+					}
+				}
+			} catch (Exception e){
+				getRequest.abort();
+				Log.e("Download Picture", "Something went horribly wrong" +
+						url + " " + e.toString());
+			}
+			
+			return null;
+		}
+	}
+
 
 }

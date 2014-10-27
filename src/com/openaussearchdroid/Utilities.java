@@ -71,56 +71,5 @@ public class Utilities
 		e.printStackTrace(new PrintWriter(tempSW));
 		Log.e(e.getMessage(),tempSW.toString());
 	}
-	public static Bitmap fetchImage(String imgLoc) throws IOException
-	{
-		/*
-		android is so awesome that the Log.i a few lines down
-		will trigger a null pointer exception - because it cannot
-		print null ... right ... - bail out early.
-		The pwnie has severed it's place in debugging!
-		 */
-		if (imgLoc == null)
-		{
-			Log.i("fetchImage", "imgLoc was null");
-			return null;
-		}
-		URL aURL;
-		URLConnection con;
-		Log.i("fetchImage", imgLoc);
-		aURL = new URL(imgLoc);
-		con = aURL.openConnection();
-		con.setConnectTimeout(10000);
-		con.setReadTimeout(10000);
-		con.setDefaultUseCaches(true);
-		/*
-		android is so awesome that if you were to do
-		bitmap = BitmapFactory.decodeStream(...)
-		it can fail! (except for pwnies - no joke! - test it!)
-			(on low bandwidth high latency connections - but not in the vm ;P)
-		awesome++
-		 */
-		byte [] content = convertInputStreamToByteArray(con.getInputStream());
-		closeStream(con.getInputStream());
-
-		Bitmap bitmap = BitmapFactory.decodeByteArray(content, 0, content.length);
-		if (bitmap == null)
-		{
-			throw new IOException("bitmap is null");
-		}
-		return bitmap;
-	}
-	public static byte[] convertInputStreamToByteArray(InputStream is) throws IOException
-	{
-		BufferedInputStream bis = new BufferedInputStream(is);
-		ByteArrayOutputStream buf = new ByteArrayOutputStream();
-		int result = bis.read();
-		while(result !=-1)
-		{
-			byte b = (byte)result;
-			buf.write(b);
-			result = bis.read();
-		}
-		return buf.toByteArray();
-	}
-
+	
 }

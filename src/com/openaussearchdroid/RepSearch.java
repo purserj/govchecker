@@ -1,6 +1,7 @@
 package com.openaussearchdroid;
 
 import android.graphics.Bitmap;
+import android.util.Log;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -96,7 +97,7 @@ public class RepSearch
 
 	public void fetchAndSetRepImage() throws IOException
 	{
-		this.repImage = Utilities.fetchImage(this.imgLoc);
+
 	}
 
 	public void setPwnieImageUrl()
@@ -134,6 +135,11 @@ public class RepSearch
 				rep.set_Party(obj.getString("party"));
 				rep.set_Constituency(obj.getString("constituency"));
 				rep.set_House(Integer.parseInt(obj.getString("house")));
+				office = obj.getJSONArray("office");
+	            if(office != null){
+	                JSONObject officeobj = office.getJSONObject(0);
+	                rep.set_Position(officeobj.getString("position"));
+	            }
 				reps.add(rep);
 			}
 		} else if (this.stype == 3){
@@ -147,9 +153,13 @@ public class RepSearch
 				rep.set_Constituency(obj.getString("constituency"));
 				rep.set_House(Integer.parseInt(obj.getString("house")));
                 office = obj.getJSONArray("office");
-                if(office != null){
-                    JSONObject objoff = office.getJSONObject(0);
-                    rep.set_Position(objoff.getString("position"));
+                try{
+                	if(office != null){
+                		JSONObject objoff = office.getJSONObject(0);
+                		rep.set_Position(objoff.getString("position"));
+                	}
+                }catch (Exception e){
+                	Log.e("Office", e.getStackTrace().toString());
                 }
 				reps.add(rep);
 			}

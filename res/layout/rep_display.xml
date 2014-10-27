@@ -13,15 +13,6 @@
 	android:layout_centerInParent="false" 
 	android:layout_centerHorizontal="true">
 	</TextView>
-
-
-	<ImageView
-		android:id="@+id/RepImage"
-		android:layout_width="wrap_content"
-		android:layout_height="wrap_content"
-        android:layout_below="@+id/NameTextView"
-        android:contentDescription="@string/res_display_rep_display_desc">
-		</ImageView>
 		<TableLayout  
 	android:layout_below="@+id/RepImage" 
 	android:layout_height="wrap_content" 
@@ -143,11 +134,19 @@
 			    android:id="@+id/RepsHansardButton"
 			    android:layout_width="fill_parent"
 			    android:layout_height="wrap_content"
+			    android:layout_gravity="center_horizontal"
 			    android:text="@string/res_hansard_display_button" />
 
 		</TableRow>
 	</TableLayout>
 
-	
+		<ImageView
+		    android:id="@+id/RepImage"
+		    android:layout_width="150dp"
+		    android:layout_height="200dp"
+		    android:layout_below="@+id/NameTextView"
+		    android:layout_centerHorizontal="true"
+		    android:contentDescription="@string/res_display_rep_display_desc"
+		    android:scaleType="fitXY" />
 
 </RelativeLayout>

@@ -92,6 +92,7 @@ public final class R {
         public static final int res_display_house=0x7f060003;
         public static final int res_display_party=0x7f060007;
         public static final int res_display_position=0x7f060002;
+        public static final int res_display_rep_display_desc=0x7f060008;
         public static final int res_display_seat=0x7f060004;
         public static final int res_hansard_display_button=0x7f060006;
     }

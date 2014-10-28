@@ -1,4 +1,4 @@
-package com.openaussearchdroid;
+package com.govchecker;
 
 import android.accounts.NetworkErrorException;
 import android.app.Activity;
@@ -22,6 +22,8 @@ import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
+
+import com.openaussearchdroid.R;
 
 public class Rep_Display extends Activity{
 	

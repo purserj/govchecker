@@ -7,19 +7,19 @@
     	android:icon="@drawable/icon" 
     	android:label="@string/app_name"
     	android:theme="@android:style/Theme.Holo">
-        <activity android:name=".OpenAusSearchDroid"
+        <activity android:name="com.govchecker.OpenAusSearchDroid"
                   android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".SearchRepsActivity"></activity>
-        <activity android:name=".SearchSenate"></activity>
-        <activity android:name=".SearchHansardActivity"></activity>
-        <activity android:name=".Rep_Display"></activity>
-        <activity android:name=".HansardSearchDisplay"></activity>
-        <activity android:name=".OAWebView"></activity>
+        <activity android:name="com.govchecker.SearchRepsActivity"></activity>
+        <activity android:name="com.govchecker.SearchSenate"></activity>
+        <activity android:name="com.govchecker.SearchHansardActivity"></activity>
+        <activity android:name="com.govchecker.Rep_Display"></activity>
+        <activity android:name="com.govchecker.HansardSearchDisplay"></activity>
+        <activity android:name="com.govchecker.OAWebView"></activity>
     </application>
     <uses-sdk android:minSdkVersion="11"/>
 

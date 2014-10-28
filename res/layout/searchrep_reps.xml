@@ -23,7 +23,7 @@
 		android:id="@+id/searchRepButton" 
 		android:layout_width="fill_parent" 
 		android:layout_height="wrap_content"
-		android:text="Find Your Rep"
+		android:text="@string/res_repsearch_button"
 		android:layout_below="@+id/EditText01">
 		</Button>
 	<ScrollView 
@@ -36,8 +36,15 @@
 			android:layout_width="fill_parent" 
 			android:layout_height="wrap_content"
 			android:orientation="vertical"
+			android:stretchColumns="*"
 			>
-			</TableLayout>
+			<ProgressBar
+            android:id="@+id/SearchProg"
+            style="?android:attr/progressBarStyleSmall"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:visibility="gone"/>			</TableLayout>
 		</ScrollView>
 
 

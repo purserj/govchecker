@@ -1,4 +1,4 @@
-package com.openaussearchdroid;
+package com.govchecker;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -8,6 +8,8 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import com.openaussearchdroid.R;
 
 import android.app.Activity;
 import android.content.Context;

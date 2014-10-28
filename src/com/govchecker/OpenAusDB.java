@@ -1,4 +1,4 @@
-package com.openaussearchdroid;
+package com.govchecker;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;

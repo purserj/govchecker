@@ -1,4 +1,4 @@
-package com.openaussearchdroid;
+package com.govchecker;
 
 import java.io.IOException;
 import java.net.URLEncoder;
@@ -6,6 +6,8 @@ import java.util.ArrayList;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import org.json.JSONException;
+
+import com.openaussearchdroid.R;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -27,6 +29,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TableLayout;
 import android.widget.TableRow;
@@ -42,6 +45,7 @@ public class SearchRepsActivity extends Activity
 	private ImageView _iv;
 	private Spinner _spinner;
 	private Button _repsbutton;
+	private ProgressBar _searchprog;
 	@SuppressWarnings("unused")
 	private String previousSearch = "";
 	private Integer stype;
@@ -130,6 +134,8 @@ public class SearchRepsActivity extends Activity
 				Log.i("search_in_progress", " search REPS SEARCH STOPPED");
 			}
 		});
+		
+		_searchprog = (ProgressBar) findViewById(R.id.SearchProg);
 	}
 
 
@@ -157,6 +163,7 @@ public class SearchRepsActivity extends Activity
 		{
 			Toast toast = Toast.makeText(getApplicationContext(), "searching...", Toast.LENGTH_LONG);
 			toast.show();
+			_searchprog.setVisibility(View.VISIBLE);
 		}
 
 		@Override
@@ -208,6 +215,7 @@ public class SearchRepsActivity extends Activity
 		@Override
 		protected void onPostExecute(RepSearch repSearch)
 		{
+			_searchprog.setVisibility(View.GONE);
 			results.removeAllViews();
 			LayoutInflater inflater = getLayoutInflater();
 			if (repSearch == null)
@@ -225,31 +233,36 @@ public class SearchRepsActivity extends Activity
 				_iv.setImageBitmap(repSearch.getRepImage());
 				return;
 			}
-			for(int i = 0; i < reps.size(); i++ )
-			{
-				final Rep_Object rep = reps.get(i);
-				Log.d("Rep name", rep.get_Name());
-				TableRow tr =(TableRow)inflater.inflate(R.layout.tablerow, results, false);
-				TextView tvr = (TextView)tr.findViewById(R.id.content);
-				tr.setId(100+i);
-				tr.setLayoutParams(new LayoutParams(
-	                    LayoutParams.FILL_PARENT,
-	                    LayoutParams.WRAP_CONTENT)); 
-				tvr.setBackgroundResource(R.drawable.border);
-				tvr.setText(Html.fromHtml("<b>"
-						+rep.get_Name()+" - "+rep.get_Constituency() +"<b>"));
-				tvr.setOnClickListener(new OnClickListener()
+			if(reps != null){
+				for(int i = 0; i < reps.size(); i++ )
 				{
-					public void onClick(View view)
+					final Rep_Object rep = reps.get(i);
+					Log.d("Rep name", rep.get_Name());
+					TableRow tr =(TableRow)inflater.inflate(R.layout.tablerow, results, false);
+					TextView tvr = (TextView)tr.findViewById(R.id.content);
+					tr.setId(100+i);
+					tr.setLayoutParams(new LayoutParams(
+		                    LayoutParams.FILL_PARENT,
+		                    LayoutParams.WRAP_CONTENT)); 
+					tvr.setBackgroundResource(R.drawable.border);
+					tvr.setText(Html.fromHtml("<b>"
+							+rep.get_Name()+" - "+rep.get_Constituency() +"<b>"));
+					tvr.setOnClickListener(new OnClickListener()
 					{
-						Intent repIntent = new Intent(view.getContext(), Rep_Display.class);
-						view.setBackgroundColor(1);
-						Rep_Display.rep = rep;
-						startActivityForResult(repIntent,0);
-					}
-				});
-				results.addView(tr);
-				//_iv.setImageBitmap(repSearch.getRepImage());
+						public void onClick(View view)
+						{
+							Intent repIntent = new Intent(view.getContext(), Rep_Display.class);
+							view.setBackgroundColor(1);
+							Rep_Display.rep = rep;
+							startActivityForResult(repIntent,0);
+						}
+					});
+					results.addView(tr);
+					//_iv.setImageBitmap(repSearch.getRepImage());
+				}
+			} else {
+				Toast toast = Toast.makeText(getApplicationContext(), "No results", Toast.LENGTH_LONG);
+				toast.show();
 			}
 			/* Grab Hansard Mentions */
 			if (repSearch.getPersonID() == null)

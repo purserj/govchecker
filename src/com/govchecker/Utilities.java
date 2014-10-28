@@ -1,4 +1,4 @@
-package com.openaussearchdroid;
+package com.govchecker;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedReader;

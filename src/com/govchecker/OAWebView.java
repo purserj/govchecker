@@ -1,4 +1,6 @@
-package com.openaussearchdroid;
+package com.govchecker;
+
+import com.openaussearchdroid.R;
 
 import android.app.Activity;
 import android.os.Bundle;

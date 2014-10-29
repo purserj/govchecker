@@ -7,7 +7,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 import org.json.JSONException;
 
-import com.openaussearchdroid.R;
+import com.govchecker.R;
 
 import android.app.Activity;
 import android.content.Intent;

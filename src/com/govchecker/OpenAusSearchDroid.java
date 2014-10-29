@@ -1,6 +1,6 @@
 package com.govchecker;
 
-import com.openaussearchdroid.R;
+import com.govchecker.R;
 
 import android.app.Activity;
 import android.content.Intent;

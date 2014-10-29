@@ -23,7 +23,7 @@ import org.apache.http.HttpStatus;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
 
-import com.openaussearchdroid.R;
+import com.govchecker.R;
 
 public class Rep_Display extends Activity{
 	

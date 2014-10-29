@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">My Government</string>
+    <string name="app_name">Gov Checker</string>
     <string name="res_display_position">Position:</string>
     <string name="res_display_house">House</string>
     <string name="res_display_seat">Seat</string>

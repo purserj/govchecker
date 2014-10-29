@@ -109,6 +109,9 @@ public class RepSearch
 	{
 		reps = new ArrayList<Rep_Object>();
 		if(this.stype == 1){
+			if(!this.resultJson.has("person_id")){
+				return null;
+			}
 			Rep_Object rep = new Rep_Object();
 			rep.set_pID(Integer.parseInt(this.resultJson.getString("person_id")));
 			rep.set_FirstName(this.resultJson.getString("first_name"));
@@ -117,11 +120,15 @@ public class RepSearch
 			rep.set_Party(this.resultJson.getString("party"));
 			rep.set_Constituency(this.resultJson.getString("constituency"));
 			rep.set_House(Integer.parseInt(this.resultJson.getString("house")));
-            office = this.resultJson.getJSONArray("office");
-            if(office != null){
-                JSONObject obj = office.getJSONObject(0);
-                rep.set_Position(obj.getString("position"));
-            }
+			if(this.resultJson.has("office")){
+	            office = this.resultJson.getJSONArray("office");
+	            if(office != null){
+	                JSONObject obj = office.getJSONObject(0);
+	                rep.set_Position(obj.getString("position"));
+	            }
+			} else {
+				rep.set_Position("Backbencher");
+			}
 			reps.add(rep);	
 		} else if (this.stype == 2) {
 			for(int i = 0; i < resultJsonArray.length(); i++)

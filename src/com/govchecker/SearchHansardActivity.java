@@ -8,7 +8,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import com.openaussearchdroid.R;
+import com.govchecker.R;
 
 import android.app.Activity;
 import android.content.Intent;

@@ -21,6 +21,7 @@ public class Rep_Object {
 	private String date_entered;
     private String position;
 	private String date_left;
+	private String attendance;
 	private String left_reason;
 	private String last_updated;
 	

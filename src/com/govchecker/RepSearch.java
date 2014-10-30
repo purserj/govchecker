@@ -142,11 +142,13 @@ public class RepSearch
 				rep.set_Party(obj.getString("party"));
 				rep.set_Constituency(obj.getString("constituency"));
 				rep.set_House(Integer.parseInt(obj.getString("house")));
-				office = obj.getJSONArray("office");
-	            if(office != null){
-	                JSONObject officeobj = office.getJSONObject(0);
-	                rep.set_Position(officeobj.getString("position"));
-	            }
+				if(obj.has("office")){
+					office = obj.getJSONArray("office");
+		            if(office != null){
+		                JSONObject officeobj = office.getJSONObject(0);
+		                rep.set_Position(officeobj.getString("position"));
+		            }
+				}
 				reps.add(rep);
 			}
 		} else if (this.stype == 3){

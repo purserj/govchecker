@@ -19,6 +19,12 @@
 		android:layout_below="@+id/OptionSpinner"
 		android:imeOptions="actionDone">
 		</EditText>
+	<Spinner
+	    android:id="@+id/DivisionSpinner"
+	    android:layout_width="fill_parent"
+	    android:layout_height="wrap_content"
+	    android:layout_below="@+id/OptionSpinner"
+	    android:visibility="gone"></Spinner>
 	<Button 
 		android:id="@+id/searchRepButton" 
 		android:layout_width="fill_parent" 

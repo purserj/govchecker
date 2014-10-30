@@ -30,13 +30,14 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class SearchRepsActivity extends Activity
+public class SearchRepsActivity extends Activity implements OnItemSelectedListener
 {
 
 	private static final String oakey = "F8c6oBD4YQsvEAGJT8DUgL8p";
@@ -44,6 +45,7 @@ public class SearchRepsActivity extends Activity
 	private TextView _tv;
 	private ImageView _iv;
 	private Spinner _spinner;
+	private Spinner _divspinner;
 	private Button _repsbutton;
 	private ProgressBar _searchprog;
 	@SuppressWarnings("unused")
@@ -56,17 +58,171 @@ public class SearchRepsActivity extends Activity
 
 	public void onCreate(Bundle savedInstanceState)
 	{
-		String[] options = new String[] {"By Postcode", "By Party", "By Date", "By Seat"};
+		String[] options = new String[] {"By Postcode", "By Seat"};
+		String[] divisions = new String[] {"Banks",
+				"Barton",
+				"Bennelong",
+				"Berowra",
+				"Blaxland",
+				"Bradfield",
+				"Calare",
+				"Charlton",
+				"Chifley",
+				"Cook",
+				"Cowper",
+				"Cunningham",
+				"Dobell",
+				"Eden-Monaro",
+				"Farrer",
+				"Fowler",
+				"Gilmore",
+				"Grayndler",
+				"Greenway",
+				"Hughes",
+				"Hume",
+				"Hunter",
+				"Kingsford Smith",
+				"Lindsay",
+				"Lyne",
+				"Macarthur",
+				"Mackellar",
+				"Macquarie",
+				"McMahon",
+				"Mitchell",
+				"New England",
+				"Newcastle",
+				"North Sydney",
+				"Page",
+				"Parkes",
+				"Parramatta",
+				"Paterson",
+				"Reid",
+				"Richmond",
+				"Riverina",
+				"Robertson",
+				"Shortland",
+				"Sydney",
+				"Throsby",
+				"Warringah",
+				"Watson",
+				"Wentworth",
+				"Werriwa",
+				"Aston",
+				"Ballarat",
+				"Batman",
+				"Bendigo",
+				"Bruce",
+				"Calwell",
+				"Casey",
+				"Chisholm",
+				"Deakin",
+				"Dunkley",
+				"Flinders",
+				"Gellibrand",
+				"Gippsland",
+				"Goldstein",
+				"Gorton",
+				"Higgins",
+				"Holt",
+				"Hotham",
+				"Indi",
+				"Isaacs",
+				"Jagajaga",
+				"Kooyong",
+				"Lalor",
+				"La Trobe",
+				"McEwen",
+				"McMillan",
+				"Mallee",
+				"Maribyrnong",
+				"Melbourne",
+				"Melbourne Ports",
+				"Menzies",
+				"Murray",
+				"Scullin",
+				"Wannon",
+				"Wills",
+				"Blair",
+				"Bonner",
+				"Bowman",
+				"Brisbane",
+				"Capricornia",
+				"Dawson",
+				"Dickson",
+				"Fadden",
+				"Fairfax",
+				"Fisher",
+				"Flynn",
+				"Forde",
+				"Griffith",
+				"Groom",
+				"Herbert",
+				"Hinkler",
+				"Kennedy",
+				"Leichhardt",
+				"Lilley",
+				"Longman",
+				"Maranoa",
+				"McPherson",
+				"Moncrieff",
+				"Moreton",
+				"Oxley",
+				"Petrie",
+				"Rankin",
+				"Ryan",
+				"Wide Bay",
+				"Wright",
+				"Brand",
+				"Canning",
+				"Cowan",
+				"Curtin",
+				"Durack",
+				"Forrest",
+				"Fremantle",
+				"Hasluck",
+				"Moore",
+				"O'Connor",
+				"Pearce",
+				"Perth",
+				"Stirling",
+				"Swan",
+				"Tangney",
+				"Adelaide",
+				"Barker",
+				"Boothby",
+				"Grey",
+				"Hindmarsh",
+				"Kingston",
+				"Makin",
+				"Mayo",
+				"Port Adelaide",
+				"Sturt",
+				"Wakefield",
+				"Bass",
+				"Braddon",
+				"Denison",
+				"Franklin",
+				"Lyons",
+				"Canberra",
+				"Fraser",
+				"Lingiari",
+				"Solomon"};
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.searchrep_reps);
 		searchInProgress = new AtomicBoolean(false);
 		//_iv = (ImageView) findViewById(R.id.MemberPic);
+		_etext = (EditText) findViewById(R.id.EditText01);
 		_spinner = (Spinner) findViewById(R.id.OptionSpinner);
+		_divspinner = (Spinner) findViewById(R.id.DivisionSpinner);
 		_repsbutton = (Button) findViewById(R.id.searchRepButton);
+		ArrayAdapter<String> divadapter = new ArrayAdapter<String>(this,
+				android.R.layout.simple_spinner_item, divisions);
 		ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, 
 				android.R.layout.simple_spinner_item, options);
 		_spinner.setAdapter(adapter);
-		_spinner.setOnItemSelectedListener(new MyOnItemSelectedListener());
+		_spinner.setOnItemSelectedListener(this);
+		_divspinner.setAdapter(divadapter);
+		_divspinner.setOnItemSelectedListener(this);
 		results = (TableLayout) findViewById(R.id.repsresults);
 		_repsbutton.setOnClickListener(new View.OnClickListener()
 		{
@@ -74,8 +230,17 @@ public class SearchRepsActivity extends Activity
 			{
 				String _spinner_value = (String) _spinner.getSelectedItem();
 				_view = v;
-				_etext = (EditText) findViewById(R.id.EditText01);
-				String searchKey = _etext.getText().toString();
+				
+				String searchKey;
+				
+				if(_spinner_value == "By Seat"){
+					stype = 1;
+					searchKey = (String) _divspinner.getSelectedItem();
+				}else {
+					stype = 2;
+					searchKey = _etext.getText().toString();
+				}
+				
 				if (previousSearch.equals(searchKey))
 				{
 					Log.i("duplicate_search", " in search reps");
@@ -93,17 +258,12 @@ public class SearchRepsActivity extends Activity
 				String baseUrlPath = "http://www.openaustralia.org";
 				String urlString = "http://www.openaustralia.org/api/";
 				
-				
 				if(_spinner_value == "By Seat"){
 					urlString += "getRepresentative";
-					stype = 1;
-				}else if(_spinner_value == "By Party"){
-					urlString += "getRepresentatives";
-					stype = 3;
 				}else {
 					urlString += "getRepresentatives";
-					stype = 2;
 				}
+				
 				urlString += "?key=" + oakey;
 				urlString += "&output=json";
 				
@@ -114,10 +274,6 @@ public class SearchRepsActivity extends Activity
 				else if(_spinner_value == "By Postcode")
 				{
 					urlString += "&postcode=" + URLEncoder.encode(searchKey);
-				}
-				else if(_spinner_value == "By Party")
-				{
-					urlString += "&party=" + URLEncoder.encode(searchKey);
 				}
 				Log.i("URL String", urlString);
 				if (searchKey.equals("test"))
@@ -142,18 +298,6 @@ public class SearchRepsActivity extends Activity
 	public void searchRepClickHandler(View target)
 	{
 
-	}
-	
-	public class MyOnItemSelectedListener implements OnItemSelectedListener {
-
-	    public void onItemSelected(AdapterView<?> parent,
-	        View view, int pos, long id) {
-	      
-	    }
-
-	    public void onNothingSelected(AdapterView parent) {
-	      // Do nothing.
-	    }
 	}
 
 	public class PerformRepsSearch extends AsyncTask <RepSearch, Integer, RepSearch>
@@ -238,7 +382,7 @@ public class SearchRepsActivity extends Activity
 				{
 					final Rep_Object rep = reps.get(i);
 					Log.d("Rep name", rep.get_Name());
-					TableRow tr =(TableRow)inflater.inflate(R.layout.tablerow, results, false);
+					final TableRow tr =(TableRow)inflater.inflate(R.layout.tablerow, results, false);
 					TextView tvr = (TextView)tr.findViewById(R.id.content);
 					tr.setId(100+i);
 					tr.setLayoutParams(new LayoutParams(
@@ -253,6 +397,7 @@ public class SearchRepsActivity extends Activity
 						{
 							Intent repIntent = new Intent(view.getContext(), Rep_Display.class);
 							view.setBackgroundColor(1);
+							results.removeAllViews();
 							Rep_Display.rep = rep;
 							startActivityForResult(repIntent,0);
 						}
@@ -300,6 +445,35 @@ public class SearchRepsActivity extends Activity
 		}
 		
 		return true;
+	}
+
+
+	@Override
+	public void onItemSelected(AdapterView<?> parent, View view, int position,
+			long id) {
+		// TODO Auto-generated method stub
+		if(parent.getItemAtPosition(position).toString() == "By Seat"){
+			this._etext.setVisibility(View.GONE);
+			this._divspinner.setVisibility(View.VISIBLE);
+			RelativeLayout.LayoutParams rparams = (RelativeLayout.LayoutParams)_repsbutton.getLayoutParams();
+			rparams.addRule(RelativeLayout.BELOW, R.id.DivisionSpinner);
+			this._repsbutton.setLayoutParams(rparams);
+		} else if(parent.getItemAtPosition(position).toString() == "By Postcode"){
+			this._divspinner.setVisibility(View.GONE);
+			this._etext.setText("");
+			this._etext.setVisibility(View.VISIBLE);
+			RelativeLayout.LayoutParams rparams = (RelativeLayout.LayoutParams)_repsbutton.getLayoutParams();
+			rparams.addRule(RelativeLayout.BELOW, R.id.EditText01);
+			this._repsbutton.setLayoutParams(rparams);
+		}
+		
+	}
+
+
+	@Override
+	public void onNothingSelected(AdapterView<?> parent) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

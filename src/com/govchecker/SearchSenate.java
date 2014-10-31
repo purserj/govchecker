@@ -99,6 +99,7 @@ public class SearchSenate extends Activity
 	}
 	private class PerformSenateSearch extends AsyncTask <String, Integer, ArrayList<Rep_Object>>
 	{
+		private JSONArray office;
 		@Override
 		protected ArrayList<Rep_Object> doInBackground(String... stringUrlArray)
 		{
@@ -133,37 +134,28 @@ public class SearchSenate extends Activity
 				try
 				{
 					rep = new Rep_Object();
-					JSONObject jsonobj = jsonr.getJSONObject(i);
-					JSONArray repJson = null;
-					String repString = "http://www.openaustralia.org/api/getSenator" +
-					"?key=" + oakey +
-					"&id=" + jsonobj.getString("person_id") +
-					"output=js";
+					JSONObject repObj = jsonr.getJSONObject(i);
 					
-					try{
-						repResult = Utilities.getDataFromUrl(repString, "url");
-					} catch(IOException e){
-						
-					}
-					try{
-						repJson = new JSONArray(repResult);
-					}catch (JSONException e){
-						
-					}
-					for(int k=0;k < repJson.length();k++){
-						JSONObject repJObj = repJson.getJSONObject(k);
-						Log.d("Rep JSON", repJObj.toString());
-						rep.set_FirstName(repJObj.getString("first_name"));
-						rep.set_LastName(repJObj.getString("last_name"));
-						rep.set_House(2);
-						rep.set_Party(repJObj.getString("party"));
-						rep.set_Constituency(repJObj.getString("constituency"));
-						rep.set_DateEntered(repJObj.getString("entered_house"));
-						rep.set_pID(repJObj.getInt("person_id"));
-					}
-					
+					rep.set_FirstName(repObj.getString("first_name"));
+					rep.set_LastName(repObj.getString("last_name"));
+					rep.set_House(2);
+					rep.set_Party(repObj.getString("party"));
+					rep.set_Constituency(repObj.getString("constituency"));
+					rep.set_DateEntered(repObj.getString("entered_house"));
+					rep.set_pID(repObj.getInt("person_id"));
+					if(repObj.has("office")){
+						office = repObj.getJSONArray("office");
+			               try{
+			               	if(office != null){
+			               		JSONObject objoff = office.getJSONObject(0);
+			               		rep.set_Position(objoff.getString("position"));
+			               	}
+			               }catch (Exception e){
+			               	Log.e("Office", e.getStackTrace().toString());
+			               }
+					}					
 					//Set out Rep Details from 
-					Log.d("Rep String: ", repString);
+					//Log.d("Rep String: ", repString);
 					
 				}
 				catch (JSONException e)

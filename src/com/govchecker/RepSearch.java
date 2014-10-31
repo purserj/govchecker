@@ -152,6 +152,7 @@ public class RepSearch
 				reps.add(rep);
 			}
 		} else if (this.stype == 3){
+			Log.d("Which GRABBER", "SENATE");
 			for(int i = 0; i < resultJsonArray.length(); i++)
 			{
 				Rep_Object rep = new Rep_Object();
@@ -161,15 +162,17 @@ public class RepSearch
 				rep.set_Party(obj.getString("party"));
 				rep.set_Constituency(obj.getString("constituency"));
 				rep.set_House(Integer.parseInt(obj.getString("house")));
-                office = obj.getJSONArray("office");
-                try{
-                	if(office != null){
-                		JSONObject objoff = office.getJSONObject(0);
-                		rep.set_Position(objoff.getString("position"));
-                	}
-                }catch (Exception e){
-                	Log.e("Office", e.getStackTrace().toString());
-                }
+				if(obj.has("office")){
+					office = obj.getJSONArray("office");
+	                try{
+	                	if(office != null){
+	                		JSONObject objoff = office.getJSONObject(0);
+	                		rep.set_Position(objoff.getString("position"));
+	                	}
+	                }catch (Exception e){
+	                	Log.e("Office", e.getStackTrace().toString());
+	                }
+				}
 				reps.add(rep);
 			}
 		}

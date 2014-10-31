@@ -39,7 +39,6 @@ public class OAWebView extends Activity{
 	private Intent getDefaultShareIntent(){
 		Intent intent = new Intent(Intent.ACTION_SEND);
 		intent.setType("text/plain");
-		intent.putExtra(Intent.EXTRA_SUBJECT, "SUBJECT");
 		intent.putExtra(Intent.EXTRA_TEXT, wv.getUrl().toString());
 		return intent;
 	}

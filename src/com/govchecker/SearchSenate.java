@@ -153,7 +153,9 @@ public class SearchSenate extends Activity
 			               }catch (Exception e){
 			               	Log.e("Office", e.getStackTrace().toString());
 			               }
-					}					
+					} else {
+						rep.set_Position("Senator");
+					}
 					//Set out Rep Details from 
 					//Log.d("Rep String: ", repString);
 					

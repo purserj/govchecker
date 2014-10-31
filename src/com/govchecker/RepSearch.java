@@ -127,7 +127,7 @@ public class RepSearch
 	                rep.set_Position(obj.getString("position"));
 	            }
 			} else {
-				rep.set_Position("Backbencher");
+				rep.set_Position("Member of Parliament");
 			}
 			reps.add(rep);	
 		} else if (this.stype == 2) {

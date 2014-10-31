@@ -7,7 +7,7 @@
 	<ImageView 
 		android:layout_height="wrap_content" 
 		android:layout_width="wrap_content"  
-		android:id="@+id/oaLogo"
+		android:id="@+id/gcLogo"
 		android:scaleType="center"
 		android:layout_centerHorizontal="true"
 		android:layout_marginTop="5dip"
@@ -18,7 +18,7 @@
 		android:id="@+id/SearchRep_Reps" 
 		android:layout_width="fill_parent" 
 		android:layout_height="wrap_content"
-		android:layout_below="@+id/oaLogo">
+		android:layout_below="@+id/gcLogo">
 		</Button>
 	<Button 
 		android:text="Search Senate" 

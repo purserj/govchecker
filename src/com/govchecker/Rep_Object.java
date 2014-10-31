@@ -139,7 +139,7 @@ public class Rep_Object {
 	}
 
     public String get_Position(){
-        String nullpos = "Backbencher";
+        String nullpos = "Member of Parliament";
         if(this.position != null){
             return this.position;
         } else {

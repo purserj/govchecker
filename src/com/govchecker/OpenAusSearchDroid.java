@@ -17,7 +17,7 @@ public class OpenAusSearchDroid extends Activity
 	private Button repbutt;
 	private Button senbutt;
 	private Button hansbutt;
-	private ImageView oaLogo;
+	private ImageView gcLogo;
 	private OpenAusDB dh;
 
 	@Override
@@ -27,8 +27,8 @@ public class OpenAusSearchDroid extends Activity
 		setContentView(R.layout.main);
 		repbutt = (Button) findViewById(R.id.SearchRep_Reps);
 		senbutt = (Button) findViewById(R.id.SearchRep_Senate);
-		oaLogo = (ImageView) findViewById(R.id.oaLogo);
-		oaLogo.setImageResource(R.drawable.oa);
+		gcLogo = (ImageView) findViewById(R.id.gcLogo);
+		gcLogo.setImageResource(R.drawable.gc);
 		hansbutt = (Button) findViewById(R.id.SearchHansard);
 		this.dh = new OpenAusDB(this);
 

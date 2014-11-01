@@ -32,6 +32,7 @@ public class Rep_Display extends Activity{
 	private TextView _ntv;
 	private ImageView _iv;
 	private Button _repsbutton;
+	private Button _repsactivity;
 	private Button _repshansard;
 	private LinearLayout _tab;
 	@SuppressWarnings("unused")
@@ -56,6 +57,7 @@ public class Rep_Display extends Activity{
 		_tab = (LinearLayout) findViewById(R.id.innerlayout);
 		_tvhans = (TextView) findViewById(R.id.hansardmentions_label);*/
 		_repshansard = (Button) findViewById(R.id.RepsHansardButton);
+		_repsactivity = (Button) findViewById(R.id.RepsVoteForUsButton);
         _postv = (TextView) findViewById(R.id.PosContent);
 		_ntv = (TextView) findViewById(R.id.NameTextView);
 		_htv = (TextView) findViewById(R.id.HouseContent);
@@ -90,6 +92,14 @@ public class Rep_Display extends Activity{
 				hansIntent.putExtra("searchType", 3);
 				startActivityForResult(hansIntent, 0);
 				
+			}
+		});
+		
+		_repsactivity.setOnClickListener(new View.OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				Intent activityIntent = new Intent(v.getContext(), RepActivityDisplay.class);
 			}
 		});
 	}

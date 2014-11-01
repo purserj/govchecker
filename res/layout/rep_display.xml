@@ -125,40 +125,35 @@
 			android:id="@+id/DateContent">
 			</TextView>
 		</TableRow>
-		<TableRow
-                    android:layout_height="wrap_content"
-                    android:id="@+id/AttendanceRow"
-                    android:layout_width="fill_parent">
-
-                <TextView
-                        style="@style/RepLabel"
-                        android:layout_weight="0.40"
-                        android:layout_height="wrap_content"
-                        android:visibility="visible"
-                        android:layout_width="0dp"
-                        android:id="@+id/AttendanceLabel"
-                        android:text="@string/res_display_attendance"/>
-
-                <TextView
-                        android:layout_weight="0.60"
-                        android:layout_height="wrap_content"
-                        android:layout_width="0dp"
-                        android:id="@+id/AttendanceContent"/>
-            </TableRow>
 		<TableRow   
         android:layout_height="wrap_content" 
-        android:id="@+id/ButtonRow" 
+        android:id="@+id/HansardButtonRow" 
         android:layout_width="fill_parent">
-
-			<Button
-			    android:id="@+id/RepsHansardButton"
-			    android:layout_width="fill_parent"
-			    android:layout_height="wrap_content"
-			    android:layout_gravity="center_horizontal"
-			    android:text="@string/res_hansard_display_button" />
+		<Button
+		    android:id="@+id/RepsHansardButton"
+		    android:layout_width="fill_parent"
+		    android:layout_height="wrap_content"
+		    android:text="@string/res_hansard_display_button" />
 
 		</TableRow>
+		
+		<TableRow   
+        android:layout_height="wrap_content" 
+        android:id="@+id/ActivityButtonRow" 
+        android:layout_width="fill_parent">
+		<Button
+		    android:id="@+id/RepsVoteForUsButton"
+		    android:layout_width="fill_parent"
+		    android:layout_height="wrap_content"
+		    android:text="@string/res_voteforus_display_button" />
+
+		</TableRow>
+		
 	</TableLayout>
+
+		
+
+		
 
 		<ImageView
 		    android:id="@+id/RepImage"

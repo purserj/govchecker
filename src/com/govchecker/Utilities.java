@@ -93,7 +93,21 @@ public class Utilities
 		try{
 			fullresult = new JSONObject(resultRaw);
 			rep.set_Rebellions(fullresult.getInt("rebellions"));
-			rep.set_Attendance(1);
+			double v_attended = (double) fullresult.getInt("votes_attended");
+			double v_possible = (double) fullresult.getInt("votes_possible");
+			
+			float pct = (float) ((v_attended*100)/v_possible);
+			String attendance = "Not known";
+			if(pct > (float)75){
+				attendance = "Good attendance";
+			} else if(pct > (float)50){
+				attendance = "Fair attendance";
+			} else if(pct > (float)25){
+				attendance = "Poor attendance";
+			} else {
+				attendance = "Truant";
+			}
+			rep.set_Attendance(attendance);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

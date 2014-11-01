@@ -21,7 +21,7 @@ public class Rep_Object {
 	private String date_entered;
     private String position;
 	private String date_left;
-	private Integer attendance;
+	private String attendance;
 	private String left_reason;
 	private String last_updated;
 	private Integer rebellions;
@@ -46,7 +46,7 @@ public class Rep_Object {
 		
 	}
 	
-	public void set_Attendance(Integer pct){
+	public void set_Attendance(String pct){
 		this.attendance = pct;
 	}
 	
@@ -97,7 +97,7 @@ public class Rep_Object {
 		this.rebellions = reb;
 	}
 	
-	public Integer get_Attendance(){
+	public String get_Attendance(){
 		return this.attendance;
 	}
 	

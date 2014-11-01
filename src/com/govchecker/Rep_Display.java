@@ -82,7 +82,7 @@ public class Rep_Display extends Activity{
 		_ptv.setText(rep.get_Party());
 		_dtv.setText(rep.get_DateEntered());
 		_distv.setText(rep.get_Constituency());
-		_aview.setText("50");
+		_aview.setText(rep.get_Attendance());
 		_rview.setText(rep.get_Rebellions().toString());
 		ipath = "http://www.openaustralia.org/images/mpsL/"+Integer.toString(rep.get_personID())+".jpg";
 		

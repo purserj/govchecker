@@ -156,6 +156,7 @@ public class SearchSenate extends Activity
 					} else {
 						rep.set_Position("Senator");
 					}
+					Utilities.getActivityData(rep);
 					//Set out Rep Details from 
 					//Log.d("Rep String: ", repString);
 					

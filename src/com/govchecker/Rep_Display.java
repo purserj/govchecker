@@ -22,6 +22,8 @@ import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import com.govchecker.R;
 
@@ -32,7 +34,6 @@ public class Rep_Display extends Activity{
 	private TextView _ntv;
 	private ImageView _iv;
 	private Button _repsbutton;
-	private Button _repsactivity;
 	private Button _repshansard;
 	private LinearLayout _tab;
 	@SuppressWarnings("unused")
@@ -42,6 +43,8 @@ public class Rep_Display extends Activity{
 	private TextView _ptv;
 	private TextView _dtv;
 	private TextView _distv;
+	private TextView _aview;
+	private TextView _rview;
 	private String house;
 	private View _view;
 	private String ipath;
@@ -57,13 +60,14 @@ public class Rep_Display extends Activity{
 		_tab = (LinearLayout) findViewById(R.id.innerlayout);
 		_tvhans = (TextView) findViewById(R.id.hansardmentions_label);*/
 		_repshansard = (Button) findViewById(R.id.RepsHansardButton);
-		_repsactivity = (Button) findViewById(R.id.RepsVoteForUsButton);
         _postv = (TextView) findViewById(R.id.PosContent);
 		_ntv = (TextView) findViewById(R.id.NameTextView);
 		_htv = (TextView) findViewById(R.id.HouseContent);
 		_ptv = (TextView) findViewById(R.id.PartyContent);
 		_dtv = (TextView) findViewById(R.id.DateContent);
 		_distv = (TextView) findViewById(R.id.DivisionContent);
+		_aview = (TextView) findViewById(R.id.AttendanceContent);
+		_rview = (TextView) findViewById(R.id.RebellionsContent);
 		_iv = (ImageView) findViewById(R.id.RepImage);
 		Log.d("Rep Display, Rep name: ", rep.get_Name());
 		_ntv.setText(rep.get_Name());
@@ -78,10 +82,12 @@ public class Rep_Display extends Activity{
 		_ptv.setText(rep.get_Party());
 		_dtv.setText(rep.get_DateEntered());
 		_distv.setText(rep.get_Constituency());
+		_aview.setText("50");
+		_rview.setText(rep.get_Rebellions().toString());
 		ipath = "http://www.openaustralia.org/images/mpsL/"+Integer.toString(rep.get_personID())+".jpg";
 		
 		new GetRepImageTask().execute(ipath);
-		
+
 		_repshansard.setOnClickListener(new View.OnClickListener() {
 			
 			@Override
@@ -92,14 +98,6 @@ public class Rep_Display extends Activity{
 				hansIntent.putExtra("searchType", 3);
 				startActivityForResult(hansIntent, 0);
 				
-			}
-		});
-		
-		_repsactivity.setOnClickListener(new View.OnClickListener() {
-			
-			@Override
-			public void onClick(View v) {
-				Intent activityIntent = new Intent(v.getContext(), RepActivityDisplay.class);
 			}
 		});
 	}
@@ -160,6 +158,5 @@ public class Rep_Display extends Activity{
 			return null;
 		}
 	}
-
 
 }

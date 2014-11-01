@@ -11,6 +11,8 @@ import java.io.StringWriter;
 import java.net.URL;
 import java.net.URLConnection;
 
+import org.json.JSONObject;
+
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.util.Log;
@@ -70,6 +72,32 @@ public class Utilities
 		/* capture the stack trace */
 		e.printStackTrace(new PrintWriter(tempSW));
 		Log.e(e.getMessage(),tempSW.toString());
+	}
+	
+	public static void getActivityData(Rep_Object rep){
+		
+		String resultRaw = null;
+		JSONObject fullresult;
+		
+		String activityurl = "https://theyvoteforyou.org.au/api/v1/people/"+rep.get_personID().toString()
+				+".json?key=UkkoIv7WVKsjpleqZEBD";
+		
+		try {
+			resultRaw = Utilities.getDataFromUrl(activityurl, "url");		
+			Log.d("ActivityResult", resultRaw);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		try{
+			fullresult = new JSONObject(resultRaw);
+			rep.set_Rebellions(fullresult.getInt("rebellions"));
+			rep.set_Attendance(1);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return;
 	}
 	
 }

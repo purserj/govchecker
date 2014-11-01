@@ -125,6 +125,46 @@
 			android:id="@+id/DateContent">
 			</TextView>
 		</TableRow>
+		 <TableRow
+                    android:layout_height="wrap_content"
+                    android:id="@+id/AttendanceRow"
+                    android:layout_width="fill_parent">
+
+                <TextView
+                        style="@style/RepLabel"
+                        android:layout_weight="0.40"
+                        android:layout_height="wrap_content"
+                        android:visibility="visible"
+                        android:layout_width="0dp"
+                        android:id="@+id/AttendanceLabel"
+                        android:text="@string/activity_display_attendance"/>
+
+                <TextView
+                        android:layout_weight="0.60"
+                        android:layout_height="wrap_content"
+                        android:layout_width="0dp"
+                        android:id="@+id/AttendanceContent"/>
+            </TableRow>
+		<TableRow  
+		android:layout_height="wrap_content" 
+		android:id="@+id/RebellionsRow" 
+		android:layout_width="fill_parent">
+		<TextView  
+			android:layout_height="wrap_content" 
+			android:visibility="visible" 
+			android:layout_width="0dp"
+			android:layout_weight="0.40" 
+			android:id="@+id/RebellionsLabel" 
+			android:text="@string/activity_display_rebellions"
+			style="@style/RepLabel">
+			</TextView>
+		<TextView  
+			android:layout_height="wrap_content" 
+			android:layout_width="0dp"
+			android:layout_weight="0.60" 
+			android:id="@+id/RebellionsContent">
+			</TextView>
+		</TableRow>
 		<TableRow   
         android:layout_height="wrap_content" 
         android:id="@+id/HansardButtonRow" 
@@ -137,24 +177,7 @@
 
 		</TableRow>
 		
-		<TableRow   
-        android:layout_height="wrap_content" 
-        android:id="@+id/ActivityButtonRow" 
-        android:layout_width="fill_parent">
-		<Button
-		    android:id="@+id/RepsVoteForUsButton"
-		    android:layout_width="fill_parent"
-		    android:layout_height="wrap_content"
-		    android:text="@string/res_voteforus_display_button" />
-
-		</TableRow>
-		
 	</TableLayout>
-
-		
-
-		
-
 		<ImageView
 		    android:id="@+id/RepImage"
 		    android:layout_width="150dp"

@@ -21,9 +21,10 @@ public class Rep_Object {
 	private String date_entered;
     private String position;
 	private String date_left;
-	private String attendance;
+	private Integer attendance;
 	private String left_reason;
 	private String last_updated;
+	private Integer rebellions;
 	
 	public Rep_Object()
 	{
@@ -43,6 +44,10 @@ public class Rep_Object {
 	public void populate_Rep()
 	{
 		
+	}
+	
+	public void set_Attendance(Integer pct){
+		this.attendance = pct;
 	}
 	
 	public void set_pID(Integer pID)
@@ -86,6 +91,18 @@ public class Rep_Object {
 	public void set_Party(String partyid)
 	{
 		party = partyid;
+	}
+	
+	public void set_Rebellions(Integer reb){
+		this.rebellions = reb;
+	}
+	
+	public Integer get_Attendance(){
+		return this.attendance;
+	}
+	
+	public Integer get_Rebellions(){
+		return this.rebellions;
 	}
 	
 	public String get_Name()

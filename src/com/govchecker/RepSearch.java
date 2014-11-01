@@ -129,6 +129,7 @@ public class RepSearch
 			} else {
 				rep.set_Position("Member of Parliament");
 			}
+			Utilities.getActivityData(rep);
 			reps.add(rep);	
 		} else if (this.stype == 2) {
 			for(int i = 0; i < resultJsonArray.length(); i++)
@@ -149,6 +150,7 @@ public class RepSearch
 		                rep.set_Position(officeobj.getString("position"));
 		            }
 				}
+				Utilities.getActivityData(rep);
 				reps.add(rep);
 			}
 		} else if (this.stype == 3){

@@ -12,4 +12,6 @@
     <string name="res_display_attendance">Attendance</string>
     <string name="share">Share</string>
     <string name="res_voteforus_display_button">View Rep Activity</string>
+    <string name="activity_display_attendance">Attendance</string>
+    <string name="activity_display_rebellions">Rebellions</string>
 </resources>

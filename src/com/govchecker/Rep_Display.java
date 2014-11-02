@@ -2,6 +2,7 @@ package com.govchecker;
 
 import android.accounts.NetworkErrorException;
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -14,6 +15,9 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
@@ -53,7 +57,6 @@ public class Rep_Display extends Activity{
 	public void onCreate(Bundle savedInstanceState){
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.rep_display);
-		
 		Bundle extras = getIntent().getExtras();
 		
 		/*_iv = (ImageView) findViewById(R.id.MemberPic);
@@ -84,9 +87,17 @@ public class Rep_Display extends Activity{
 		_distv.setText(rep.get_Constituency());
 		_aview.setText(rep.get_Attendance());
 		_rview.setText(rep.get_Rebellions().toString());
-		ipath = "http://www.openaustralia.org/images/mpsL/"+Integer.toString(rep.get_personID())+".jpg";
+		File image = new File(this.getFilesDir(), Integer.toString(rep.get_personID())+".jpg");
 		
-		new GetRepImageTask().execute(ipath);
+		if(!image.exists()){
+			ipath = "http://www.openaustralia.org/images/mpsL/"+Integer.toString(rep.get_personID())+".jpg";
+			Log.d("Image Download", "Downloading image");
+			new GetRepImageTask(this).execute(ipath, Integer.toString(rep.get_personID()));
+		} else {
+			Bitmap bm = BitmapFactory.decodeFile(image.getAbsolutePath());
+			Log.d("Image Download", "Loading from file");
+			_iv.setImageBitmap(bm);
+		}
 
 		_repshansard.setOnClickListener(new View.OnClickListener() {
 			
@@ -103,10 +114,15 @@ public class Rep_Display extends Activity{
 	}
 
 	private class GetRepImageTask extends AsyncTask<String, Void, Bitmap>{
-
+		
+		Context econtext;
+		
+		public GetRepImageTask(Context context){
+			this.econtext = context;
+		}
 		@Override
 		protected Bitmap doInBackground(String... params) {
-			return downloadBitmap(params[0]);		
+			return downloadBitmap(params[0], params[1]);		
 		}
 		
 		protected void onPreExecute(){
@@ -118,7 +134,7 @@ public class Rep_Display extends Activity{
 			_iv.setImageBitmap(result);
 		}
 		
-		private Bitmap downloadBitmap(String url){
+		private Bitmap downloadBitmap(String url, String personId){
 			final DefaultHttpClient client = new DefaultHttpClient();
 			
 			final HttpGet getRequest = new HttpGet(url);
@@ -139,6 +155,7 @@ public class Rep_Display extends Activity{
 						inputstream = entity.getContent();
 						
 						final Bitmap bm = BitmapFactory.decodeStream(inputstream);
+						Utilities.saveImage(bm, personId, econtext);
 						
 						return bm;
 						

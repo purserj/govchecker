@@ -222,4 +222,7 @@ public class RepSearch
 	{
 		return this.searchKey;
 	}
+	public int getSType(){
+		return this.stype;
+	}
 }

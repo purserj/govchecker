@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-  xmlns:android="http://schemas.android.com/apk/res/android"
-  android:layout_width="fill_parent"
-  android:layout_height="wrap_content">
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center_horizontal" >
+
 <TextView 
 	android:text="" 
 	android:id="@+id/NameTextView" 
@@ -169,13 +170,33 @@
         android:layout_height="wrap_content" 
         android:id="@+id/HansardButtonRow" 
         android:layout_width="fill_parent">
-		<Button
-		    android:id="@+id/RepsHansardButton"
-		    android:layout_width="fill_parent"
+
+		<ImageView
+		    android:id="@+id/hansardSearchImage"
+		    android:layout_width="wrap_content"
 		    android:layout_height="wrap_content"
-		    android:text="@string/res_hansard_display_button" />
+		    android:contentDescription="@string/res_hansardsearch_image"
+		    android:padding="5dp"
+		    android:src="@drawable/hansard_hor" />
+
+		<ImageView
+		    android:id="@+id/imageView1"
+		    android:layout_width="wrap_content"
+		    android:layout_height="wrap_content"
+		    android:contentDescription="@string/res_voting_image"
+		    android:padding="5dp"
+		    android:src="@drawable/vote" />
 
 		</TableRow>
+
+		
+
+		<TableRow   
+        android:layout_height="wrap_content" 
+        android:id="@+id/VoteHistoryButtonRow" 
+        android:layout_width="fill_parent">
+
+        </TableRow>
 		
 	</TableLayout>
 		<ImageView

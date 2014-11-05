@@ -11,7 +11,9 @@
     <string name="res_repsearch_button">Find Your Rep</string>
     <string name="res_display_attendance">Attendance</string>
     <string name="share">Share</string>
-    <string name="res_voteforus_display_button">View Rep Activity</string>
+    <string name="res_votehistory_display_button">View Voting History</string>
     <string name="activity_display_attendance">Attendance</string>
     <string name="activity_display_rebellions">Rebellions</string>
+    <string name="res_hansardsearch_image">Hansard Search</string>
+    <string name="res_voting_image">Voting History</string>
 </resources>

@@ -37,7 +37,7 @@ public class Rep_Display extends Activity{
 	private TextView _tv;
 	private TextView _ntv;
 	private ImageView _iv;
-	private Button _repsbutton;
+	private ImageView _hansv;
 	private Button _repshansard;
 	private LinearLayout _tab;
 	@SuppressWarnings("unused")
@@ -62,7 +62,7 @@ public class Rep_Display extends Activity{
 		/*_iv = (ImageView) findViewById(R.id.MemberPic);
 		_tab = (LinearLayout) findViewById(R.id.innerlayout);
 		_tvhans = (TextView) findViewById(R.id.hansardmentions_label);*/
-		_repshansard = (Button) findViewById(R.id.RepsHansardButton);
+		_hansv = (ImageView) findViewById(R.id.hansardSearchImage);
         _postv = (TextView) findViewById(R.id.PosContent);
 		_ntv = (TextView) findViewById(R.id.NameTextView);
 		_htv = (TextView) findViewById(R.id.HouseContent);
@@ -80,6 +80,7 @@ public class Rep_Display extends Activity{
 		} else {
 			_htv.setText("Senate");
 			house = "senate";
+			_hansv.setImageResource(R.drawable.hansard_sen);
 		}
         _postv.setText(rep.get_Position());
 		_ptv.setText(rep.get_Party());
@@ -99,7 +100,7 @@ public class Rep_Display extends Activity{
 			_iv.setImageBitmap(bm);
 		}
 
-		_repshansard.setOnClickListener(new View.OnClickListener() {
+		_hansv.setOnClickListener(new View.OnClickListener() {
 			
 			@Override
 			public void onClick(View v) {

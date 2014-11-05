@@ -10,6 +10,7 @@ import org.json.JSONException;
 import com.govchecker.R;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -283,7 +284,7 @@ public class SearchRepsActivity extends Activity implements OnItemSelectedListen
 				}
 
 				RepSearch rep = new RepSearch(urlString, searchKey, baseUrlPath, stype);
-				new PerformRepsSearch().execute(rep);
+				new PerformRepsSearch(_view.getContext()).execute(rep);
 				previousSearch = searchKey;
 
 				searchInProgress.set(false);
@@ -302,6 +303,12 @@ public class SearchRepsActivity extends Activity implements OnItemSelectedListen
 
 	public class PerformRepsSearch extends AsyncTask <RepSearch, Integer, RepSearch>
 	{
+		
+		private Context mContext;
+		
+		public PerformRepsSearch(Context context){
+			mContext = context;
+		}
 		@Override
 		protected void onPreExecute()
 		{
@@ -384,6 +391,12 @@ public class SearchRepsActivity extends Activity implements OnItemSelectedListen
 					Log.d("Rep name", rep.get_Name());
 					final TableRow tr =(TableRow)inflater.inflate(R.layout.tablerow, results, false);
 					TextView tvr = (TextView)tr.findViewById(R.id.content);
+					if(repSearch.getSType() == 1){
+						Intent repIntent = new Intent(mContext, Rep_Display.class);
+						Rep_Display.rep = rep;
+						startActivityForResult(repIntent,0);
+						return;
+					}
 					tr.setId(100+i);
 					tr.setLayoutParams(new LayoutParams(
 		                    LayoutParams.FILL_PARENT,

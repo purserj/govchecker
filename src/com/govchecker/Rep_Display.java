@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -38,8 +39,7 @@ public class Rep_Display extends Activity{
 	private TextView _ntv;
 	private ImageView _iv;
 	private ImageView _hansv;
-	private Button _repshansard;
-	private LinearLayout _tab;
+	private ImageView _votev;
 	@SuppressWarnings("unused")
 	private TextView _tvhans;
     private TextView _postv;
@@ -63,6 +63,7 @@ public class Rep_Display extends Activity{
 		_tab = (LinearLayout) findViewById(R.id.innerlayout);
 		_tvhans = (TextView) findViewById(R.id.hansardmentions_label);*/
 		_hansv = (ImageView) findViewById(R.id.hansardSearchImage);
+		_votev = (ImageView) findViewById(R.id.voteRecordImage);
         _postv = (TextView) findViewById(R.id.PosContent);
 		_ntv = (TextView) findViewById(R.id.NameTextView);
 		_htv = (TextView) findViewById(R.id.HouseContent);
@@ -88,7 +89,13 @@ public class Rep_Display extends Activity{
 		_distv.setText(rep.get_Constituency());
 		_aview.setText(rep.get_Attendance());
 		_rview.setText(rep.get_Rebellions().toString());
-		File image = new File(this.getFilesDir(), Integer.toString(rep.get_personID())+".jpg");
+		String uri = "@drawable/a_"+rep.get_personID();
+
+		int imageResource = getResources().getIdentifier(uri, null, getPackageName());
+
+		Drawable res = getResources().getDrawable(imageResource);
+		_iv.setImageDrawable(res);
+		/*File image = new File(this.getFilesDir(), Integer.toString(rep.get_personID())+".jpg");
 		
 		if(!image.exists()){
 			ipath = "http://www.openaustralia.org/images/mpsL/"+Integer.toString(rep.get_personID())+".jpg";
@@ -98,7 +105,7 @@ public class Rep_Display extends Activity{
 			Bitmap bm = BitmapFactory.decodeFile(image.getAbsolutePath());
 			Log.d("Image Download", "Loading from file");
 			_iv.setImageBitmap(bm);
-		}
+		}*/
 
 		_hansv.setOnClickListener(new View.OnClickListener() {
 			
@@ -110,6 +117,16 @@ public class Rep_Display extends Activity{
 				hansIntent.putExtra("searchType", 3);
 				startActivityForResult(hansIntent, 0);
 				
+			}
+		});
+		
+		_votev.setOnClickListener(new View.OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				Intent voteIntent = new Intent(v.getContext(), VoteResultDisplay.class);
+				voteIntent.putExtra("personId", rep.get_personID());
 			}
 		});
 	}

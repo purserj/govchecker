@@ -14,6 +14,8 @@ import java.io.StringWriter;
 import java.net.URL;
 import java.net.URLConnection;
 
+import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.content.Context;
@@ -76,6 +78,30 @@ public class Utilities
 		/* capture the stack trace */
 		e.printStackTrace(new PrintWriter(tempSW));
 		Log.e(e.getMessage(),tempSW.toString());
+	}
+	
+	public static void getRepVotes(Rep_Object rep){
+		String resultRaw = null;
+		String voteUrl;
+		
+		// First get the last 100 votes
+		voteUrl = "https://theyvoteforyou.org.au/api/v1/divisions.json?key=UkkoIv7WVKsjpleqZEBD";
+		
+		try{
+			resultRaw = Utilities.getDataFromUrl(voteUrl, "url");
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		try{
+			JSONArray votesObj = new JSONArray(resultRaw);
+			for(int i = 0; i < votesObj.length(); i++){
+				JSONObject voteObj = votesObj.getJSONObject(i);
+			}
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+		
 	}
 	
 	public static void getActivityData(Rep_Object rep){

@@ -15,6 +15,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.AnimationDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -158,22 +159,14 @@ public class SearchSenate extends Activity
 					}
 					Utilities.getActivityData(rep);
 					//Set out Rep Details from 
-					//Log.d("Rep String: ", repString);
-					
+					//Log.d("Rep String: ", repString);	
 				}
 				catch (JSONException e)
 				{
 					rep = null;
 					Utilities.recordStackTrace(e);
 				}
-				/*try
-				{
-					//rep.fetchAndSetRepImage();
-				}
-				catch (IOException e)
-				{
-					Utilities.recordStackTrace(e);
-				}*/
+				
 				if (rep == null)
 				{
 					continue;
@@ -205,18 +198,20 @@ public class SearchSenate extends Activity
 				context = _view.getContext();
 				TableRow tabr = new TableRow(context);
 				ImageView iv = new ImageView(context);
+				
+				String uri = "@drawable/a_"+rep.get_personID();
 
-				/* if the rep has an image, set it */
-				/*if (rep.getRepImage() != null)
-				{
-					iv.setImageBitmap(rep.getRepImage());
-				}*/
+				int imageResource = getResources().getIdentifier(uri, null, getPackageName());
+
+				Drawable res = getResources().getDrawable(imageResource);
+
+				iv.setImageDrawable(res);
 
 				TextView tvr = new TextView(context);
 				tvr.setId(300+i);
 				tvr.setText(rep.get_Name() + "\n\n" + rep.get_Party());
 				tvr.setBackgroundColor(1);
-				tvr.setOnClickListener(new OnClickListener()
+				tabr.setOnClickListener(new OnClickListener()
 				{
 					public void onClick(View view)
 					{
@@ -232,7 +227,4 @@ public class SearchSenate extends Activity
 			}
 		}
 	}
-
-
-
 }

@@ -21,14 +21,11 @@ class OpenAusDB{
 	private SQLiteDatabase db;
 	
 	private SQLiteStatement insertStmt;
-	private static final String INSERT_INTO = "insert into " 
-		+ REP_SEARCH +"(name) values(?)";
 	
 	public OpenAusDB(Context context){
 		this.context = context;
 		OpenHelper openhelper = new OpenHelper(this.context);
 		this.db = openhelper.getWritableDatabase();
-		this.insertStmt = this.db.compileStatement(INSERT_INTO);
 	}
 	
 	public void clearAll(){

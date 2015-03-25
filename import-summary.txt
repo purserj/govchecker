@@ -1,0 +1,99 @@
+ECLIPSE ANDROID PROJECT IMPORT SUMMARY
+======================================
+
+Ignored Files:
+--------------
+The following files were *not* copied into the new Gradle project; you
+should evaluate whether these are still needed in your project and if
+so manually move them:
+
+* .DS_Store
+* .idea/
+* .idea/.name
+* .idea/compiler.xml
+* .idea/copyright/
+* .idea/copyright/profiles_settings.xml
+* .idea/encodings.xml
+* .idea/misc.xml
+* .idea/modules.xml
+* .idea/scopes/
+* .idea/scopes/scope_settings.xml
+* .idea/vcs.xml
+* .idea/workspace.xml
+* LICENSE
+* README.md
+* README.md~
+* Releases/
+* Releases/govchecker-0.1.apk
+* govchecker.iml
+* out/
+* out/production/
+* out/production/govchecker/
+* out/production/govchecker/com/
+* out/production/govchecker/com/govchecker/
+* out/production/govchecker/com/govchecker/BuildConfig.class
+* out/production/govchecker/com/govchecker/HansardSearch.class
+* out/production/govchecker/com/govchecker/HansardSearchDisplay$1.class
+* out/production/govchecker/com/govchecker/HansardSearchDisplay$PerformHansardSearch$1.class
+* out/production/govchecker/com/govchecker/HansardSearchDisplay$PerformHansardSearch.class
+* out/production/govchecker/com/govchecker/HansardSearchDisplay.class
+* out/production/govchecker/com/govchecker/OAWebView.class
+* out/production/govchecker/com/govchecker/OpenAusDB$OpenHelper.class
+* out/production/govchecker/com/govchecker/OpenAusDB.class
+* out/production/govchecker/com/govchecker/OpenAusSearchDroid$1.class
+* out/production/govchecker/com/govchecker/OpenAusSearchDroid$2.class
+* out/production/govchecker/com/govchecker/OpenAusSearchDroid$3.class
+* out/production/govchecker/com/govchecker/OpenAusSearchDroid.class
+* out/production/govchecker/com/govchecker/R$attr.class
+* out/production/govchecker/com/govchecker/R$color.class
+* out/production/govchecker/com/govchecker/R$drawable.class
+* out/production/govchecker/com/govchecker/R$id.class
+* out/production/govchecker/com/govchecker/R$layout.class
+* out/production/govchecker/com/govchecker/R$menu.class
+* out/production/govchecker/com/govchecker/R$string.class
+* out/production/govchecker/com/govchecker/R$style.class
+* out/production/govchecker/com/govchecker/R$xml.class
+* out/production/govchecker/com/govchecker/R.class
+* out/production/govchecker/com/govchecker/RepSearch.class
+* out/production/govchecker/com/govchecker/Rep_Display$1.class
+* out/production/govchecker/com/govchecker/Rep_Display$2.class
+* out/production/govchecker/com/govchecker/Rep_Display$GetRepImageTask.class
+* out/production/govchecker/com/govchecker/Rep_Display.class
+* out/production/govchecker/com/govchecker/Rep_Object.class
+* out/production/govchecker/com/govchecker/SearchHansardActivity$1.class
+* out/production/govchecker/com/govchecker/SearchHansardActivity.class
+* out/production/govchecker/com/govchecker/SearchRepsActivity$1.class
+* out/production/govchecker/com/govchecker/SearchRepsActivity$PerformRepsSearch$1.class
+* out/production/govchecker/com/govchecker/SearchRepsActivity$PerformRepsSearch.class
+* out/production/govchecker/com/govchecker/SearchRepsActivity.class
+* out/production/govchecker/com/govchecker/SearchSenate$1.class
+* out/production/govchecker/com/govchecker/SearchSenate$PerformSenateSearch$1.class
+* out/production/govchecker/com/govchecker/SearchSenate$PerformSenateSearch.class
+* out/production/govchecker/com/govchecker/SearchSenate.class
+* out/production/govchecker/com/govchecker/Utilities.class
+* out/production/govchecker/com/govchecker/VoteResultDisplay.class
+* out/production/govchecker/govchecker.apk
+
+Moved Files:
+------------
+Android Gradle projects use a different directory structure than ADT
+Eclipse projects. Here's how the projects were restructured:
+
+* AndroidManifest.xml => app/src/main/AndroidManifest.xml
+* res/ => app/src/main/res/
+* src/ => app/src/main/java/
+
+Next Steps:
+-----------
+You can now build the project. The Gradle project needs network
+connectivity to download dependencies.
+
+Bugs:
+-----
+If for some reason your project does not build, and you determine that
+it is due to a bug or limitation of the Eclipse to Gradle importer,
+please file a bug at http://b.android.com with category
+Component-Tools.
+
+(This import summary is for your information only, and can be deleted
+after import once you are satisfied with the results.)

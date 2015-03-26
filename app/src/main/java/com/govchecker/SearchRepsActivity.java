@@ -60,7 +60,7 @@ public class SearchRepsActivity extends Activity implements OnItemSelectedListen
 
 	public void onCreate(Bundle savedInstanceState)
 	{
-		String[] options = new String[] {"By Postcode", "By Seat"};
+		String[] options = new String[] {"By Postcode", "By Seat", "By Party"};
 		String[] divisions = new String[] {"Banks",
 				"Barton",
 				"Bennelong",
@@ -269,21 +269,19 @@ public class SearchRepsActivity extends Activity implements OnItemSelectedListen
 				
 				urlString += "?key=" + oakey;
 				urlString += "&output=json";
-				
-				if(_spinner_value == "By Seat")
-				{
-					urlString += "&division=" + URLEncoder.encode(searchKey);
-				} 
-				else if(_spinner_value == "By Postcode")
-				{
-					urlString += "&postcode=" + URLEncoder.encode(searchKey);
-				}
+
+                switch(_spinner_value){
+                    case "By Seat":
+                        urlString += "&division=" + URLEncoder.encode(searchKey);
+                        break;
+                    case "By Postcode":
+                        urlString += "&postcode=" + URLEncoder.encode(searchKey);
+                        break;
+                    case "By Party":
+                        urlString += "&party=" + URLEncoder.encode(searchKey);
+                        break;
+                }
 				Log.i("URL String", urlString);
-				if (searchKey.equals("test"))
-				{
-					baseUrlPath = "http://d1b.org";
-					urlString = "http://d1b.org/other/pub/tests/android/open_aus_search/test_get_rep";
-				}
 
 				RepSearch rep = new RepSearch(urlString, searchKey, baseUrlPath, stype);
 				new PerformRepsSearch(_view.getContext()).execute(rep);
@@ -441,6 +439,9 @@ public class SearchRepsActivity extends Activity implements OnItemSelectedListen
 		}
 	}
 	
+	/*
+	 * TODO: Implement menu across all activities
+	 *
 	public boolean onCreateOptionsMenu(Menu menu) {
     	MenuInflater inflater = getMenuInflater();
     	inflater.inflate(R.menu.menu, menu);
@@ -460,7 +461,7 @@ public class SearchRepsActivity extends Activity implements OnItemSelectedListen
 		}
 		
 		return true;
-	}
+	}*/
 
 
 	@Override

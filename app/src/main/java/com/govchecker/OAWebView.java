@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.ShareActionProvider;
 
 public class OAWebView extends Activity{
@@ -22,7 +23,7 @@ public class OAWebView extends Activity{
 		
 		Bundle extras = getIntent().getExtras();
 		Log.d("fin_url", extras.getString("finurl"));
-		
+		wv.setWebViewClient(new WebViewClient());
 		wv.loadUrl(extras.getString("finurl"));
 	}
 	

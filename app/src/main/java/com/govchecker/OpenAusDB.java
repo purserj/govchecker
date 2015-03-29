@@ -1,19 +1,24 @@
 package com.govchecker;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.database.sqlite.SQLiteStatement;
 import android.util.Log;
 
+import java.util.HashMap;
+
 class OpenAusDB{
 	
 	private static final String DATABASE_NAME = "openausdb.db";
-	private static final int DATABASE_VERSION = 2;
+	private static final int DATABASE_VERSION = 3;
 	private static final String REP_TABLE = "representatives";
 	private static final String REP_SEARCH = "reps_search";
 	private static final String HANSARD_SEARCH = "hansard_search";
-	private static final String DIVISIONS = "divisions";
+    private static final String REP_OFFICE = "rep_office";
+    private static final String DIVISIONS = "divisions";
+    private static final String SETTINGS = "settings";
 	private static final String VOTES = "votes";
 	private static final String SEARCH_RESULTS = "search_results";
 	
@@ -32,6 +37,25 @@ class OpenAusDB{
 		this.db.delete(REP_SEARCH, null, null);
 		this.db.delete(HANSARD_SEARCH, null, null);
 	}
+
+    public void insertRep(Rep_Object rep){
+        ContentValues repvalues = new ContentValues();
+        ContentValues officevalues = new ContentValues();
+        repvalues.put("full_name", rep.get_FullName());
+        repvalues.put("party", rep.get_Party());
+        repvalues.put("house", rep.get_House());
+        repvalues.put("constituency", rep.get_Constituency());
+        repvalues.put("date_entered_parliament", rep.get_DateEntered());
+        repvalues.put("date_left_parliament", rep.get_DateLeft());
+        repvalues.put("entered_reason", rep.get_ReasonEntered());
+        repvalues.put("left_reason", rep.get_ReasonLeft());
+        repvalues.put("last_updated", rep.get_LastUpdated());
+        repvalues.put("openaus_id", rep.get_personID());
+        this.db.insert(REP_TABLE, null, repvalues);
+        officevalues.put("rep_id", rep.get_personID());
+        officevalues.put("rep_office_title", rep.get_Position());
+        this.db.insert(REP_OFFICE, null, officevalues);
+    }
 	
 	private static class OpenHelper extends SQLiteOpenHelper{
 		
@@ -41,20 +65,27 @@ class OpenAusDB{
 		
 		public void onCreate(SQLiteDatabase db){
 			db.execSQL("CREATE TABLE " + REP_TABLE + "(id INTEGER PRIMARY KEY AUTOINCREMENT," +
-					" first_name TEXT " +
-					" last_name TEXT " +
-					" party INTEGER " + 
-					" openaus_id INTEGER " +
-					" house INTEGER " +
-					" consitituency INTEGER " +
-					" date_entered_parliament TEXT " +
-					" date_left_parliament TEXT " +
+                    " first_name TEXT, " +
+                    " last_name TEXT, " +
+					" full_name TEXT, " +
+					" party INTEGER, " +
+					" openaus_id INTEGER, " +
+					" house INTEGER, " +
+					" constituency TEXT, " +
+					" date_entered_parliament TEXT, " +
+					" date_left_parliament TEXT, " +
+                    " entered_reason TEXT, " +
+                    " left_reason TEXT, " +
 					" image TEXT)");
+            db.execSQL("CREATE TABLE " + REP_OFFICE + "(id INTEGER PRIMARY KEY AUTOINCREMENT," +
+                    " rep_id INTEGER," +
+                    " rep_office_title TEXT," +
+                    " rep_office_start TEXT," +
+                    " rep_office_end TEXT)");
 			db.execSQL("CREATE TABLE " + DIVISIONS + " (id INTEGER PRIMARY KEY AUTOINCREMENT," +
 					" div_name TEXT," +
 					" div_rep INTEGER," +
-					" div_state TEXT"
-					+ " div_current_rep INTEGER)");
+					" div_state TEXT)");
 			db.execSQL("CREATE TABLE " + HANSARD_SEARCH + "(id INTEGER PRIMARY KEY AUTOINCREMENT," +
 					" search_type TEXT," +
 					" search_text TEXT," +
@@ -67,9 +98,13 @@ class OpenAusDB{
 		
 		public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion){
 			Log.w("DB_UPGRADE", "Upgrading database by dropping and rebuilding tables");
+            db.execSQL("DROP TABLE IF EXISTS " + REP_TABLE);
 			db.execSQL("DROP TABLE IF EXISTS " + REP_SEARCH);
 			db.execSQL("DROP TABLE IF EXISTS " + DIVISIONS);
+            db.execSQL("DROP TABLE IF EXISTS " + HANSARD_SEARCH);
+            db.execSQL("DROP TABLE IF EXISTS " + SEARCH_RESULTS);
 			onCreate(db);
 		}
+
 	}
 }

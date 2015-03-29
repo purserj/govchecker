@@ -23,6 +23,7 @@ public class Rep_Object {
 	private String date_left;
 	private String attendance;
 	private String left_reason;
+    private String entered_reason;
 	private String last_updated;
 	private Integer rebellions;
 	
@@ -35,16 +36,20 @@ public class Rep_Object {
 	{
 		getRepDetails(pID);
 	}
-	
-	public void getRepDetails(Integer pID)
-	{
+
+    /*
+     * DB Constructor
+     */
+	public void getRepDetails(Integer pID){
 		
 	}
-	
-	public void populate_Rep()
-	{
-		
-	}
+
+    /*
+     * JSON Constructor
+     */
+    public void getRepDetails(JSONObject rjson) {
+
+    }
 	
 	public void set_Attendance(String pct){
 		this.attendance = pct;
@@ -69,6 +74,7 @@ public class Rep_Object {
 	{
 		this.full_name = name;
 	}
+
 	public void set_House(Integer houseid)
 	{
 		house = houseid;
@@ -83,6 +89,14 @@ public class Rep_Object {
 	{
 		date_entered = Dstring;
 	}
+
+    public void set_DateLeft(String Dstring) { date_left = Dstring; }
+
+    public void set_LeftReason(String Rstring) { left_reason = Rstring; }
+
+    public void set_EnteredReason(String Rstring) { entered_reason = Rstring; }
+
+    public void set_LastUpdate(String time) { last_updated = time; }
 
     public void set_Position(String pos){
         position = pos;
@@ -144,6 +158,8 @@ public class Rep_Object {
 	{
 		return date_left;
 	}
+
+    public String get_ReasonEntered() { return entered_reason; }
 	
 	public String get_ReasonLeft()
 	{
@@ -155,6 +171,8 @@ public class Rep_Object {
 		return this.PID;
 	}
 
+    public String get_LastUpdated() { return last_updated; }
+
     public String get_Position(){
         String nullpos = "Member of Parliament";
         if(this.position != null){
@@ -163,5 +181,9 @@ public class Rep_Object {
             return nullpos;
         }
     }
+
+    public void save_Rep_Info(){
+
+    };
 
 }

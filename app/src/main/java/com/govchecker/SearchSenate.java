@@ -202,9 +202,14 @@ public class SearchSenate extends Activity
 				String uri = "@drawable/a_"+rep.get_personID();
 
 				int imageResource = getResources().getIdentifier(uri, null, getPackageName());
+				int defaultResource = getResources().getIdentifier("@drawable/a_default", null, getPackageName());
+				Drawable res;
 
-				Drawable res = getResources().getDrawable(imageResource);
-
+				if(imageResource != 0){
+					res = getResources().getDrawable(imageResource);
+				} else {
+					res = getResources().getDrawable(defaultResource);
+				}
 				iv.setImageDrawable(res);
 
 				TextView tvr = new TextView(context);

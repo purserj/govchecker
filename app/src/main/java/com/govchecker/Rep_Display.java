@@ -92,8 +92,16 @@ public class Rep_Display extends Activity{
 		String uri = "@drawable/a_"+rep.get_personID();
 
 		int imageResource = getResources().getIdentifier(uri, null, getPackageName());
+		int defaultResource = getResources().getIdentifier("@drawable/a_default", null, getPackageName());
 
-		Drawable res = getResources().getDrawable(imageResource);
+		Drawable res;
+
+		if(imageResource != 0){
+			res = getResources().getDrawable(imageResource);
+		} else {
+			res = getResources().getDrawable(defaultResource);
+		}
+
 		_iv.setImageDrawable(res);
 		/*File image = new File(this.getFilesDir(), Integer.toString(rep.get_personID())+".jpg");
 		
